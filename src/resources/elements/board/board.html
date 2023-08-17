@@ -1,0 +1,6 @@
+<template>
+    <require from="elements/block/block"></require>
+    <block repeat.for="block of blocks"
+           letter.bind="block"
+           class="color--${block}"></block>
+</template>
