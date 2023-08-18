@@ -1,7 +1,7 @@
 import { bindable, inject } from 'aurelia-framework';
 
 @inject(Element)
-export class Block {
+export class BlockCustomElement {
     @bindable letter;
 
     constructor(element) {
