@@ -1,7 +1,15 @@
-import { bindable } from 'aurelia-framework';
+import { bindable, inject } from 'aurelia-framework';
+
+@inject(Element)
 export class Block {
     @bindable letter;
-    attached() {
+
+    constructor(element) {
+        this._element = element;
     }
 
+    attached() {
+        const width = this._element.clientWidth;
+        this._element.style.setProperty("--offsetX", width + 'px');
+    }
 }
