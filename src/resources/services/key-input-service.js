@@ -5,7 +5,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 export class KeyInputService {
 
     constructor(eventAggregator) {
-        // this._eventAggregator = eventAggregator;
+        this._eventAggregator = eventAggregator;
         document.addEventListener('keydown', event => {
             this.handleKeyInput(event);
         });
@@ -14,7 +14,8 @@ export class KeyInputService {
     handleKeyInput(event) {
         const key = event.code
         if (key.startsWith('Key')) {
-            const letter = key.slice(-1);
+            const letter = key.slice(-1).toLowerCase();
+            this._eventAggregator.publish('key', letter);
             console.log(event.code, letter);
         }
 

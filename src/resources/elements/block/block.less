@@ -1,12 +1,24 @@
 block {
+    position    : absolute;
+    left        : 0;
+    top         : 0;
     display     : grid;
     place-items : center;
     --blockWidth: 5vmin;
     --offsetX   : 0;
     --offsetY   : 0;
+    --fallTime  : 0;
     width       : var(--blockWidth);
     aspect-ratio: 1;
     translate   : var(--offsetX) var(--offsetY);
+
+    &.onBoard {
+        transition: translate var(--fallTime) ease-in;
+    }
+
+    &.fallDown {
+        translate: var(--offsetX) 100vh;
+    }
 
     &.color--a {
         background-color: #FFD700;
