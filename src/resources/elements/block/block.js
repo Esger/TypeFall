@@ -29,7 +29,6 @@ export class BlockCustomElement {
         const randomCol = Math.floor(Math.random() * cols);
         this._element.style.setProperty("--offsetX", randomCol * width + 'px');
         setTimeout(_ => {
-            this._element.style.setProperty("--fallTime", this._fallTime + 's');
             this.onBoard = true;
         }, this._fallTime + 's');
     }
