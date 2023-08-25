@@ -3,7 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 
 @inject(Element, EventAggregator)
 export class BlockCustomElement {
-    @bindable letter;
+    @bindable block;
 
     constructor(element, eventAggregator) {
         this._element = element;
