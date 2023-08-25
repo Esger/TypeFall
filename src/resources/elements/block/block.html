@@ -1,0 +1,7 @@
+<template class="${onBoard ? 'onBoard' : ''}">
+    <require from="./block.css"></require>
+    <div class="color--${letter.letter} ${fallDown ? 'fallDown' : ''}">
+        <p textcontent.bind="letter.letter.toUpperCase()"></p>
+    </div>
+
+</template>

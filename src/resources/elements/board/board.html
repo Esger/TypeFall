@@ -1,0 +1,8 @@
+<template>
+    <require from="./board.css"></require>
+    <require from="elements/block/block"></require>
+
+    <block repeat.for="block of blocks"
+           letter.bind="block"></block>
+
+</template>
