@@ -4,8 +4,15 @@
     }
 
     &.au-enter-active {
-        animation   : fallDown 5s ease-in;
-        // translate: 0 100vh;
+        animation: fallDown 5s ease-in;
+    }
+
+    &.au-leave {
+        // 
+    }
+
+    &.au-leave-active {
+        animation: fallOut .5s ease-in;
     }
 }
 
@@ -18,8 +25,13 @@ block {
     width       : var(--blockWidth);
     height      : 100dvh;
 
-
     @keyframes fallDown {
+        to {
+            translate: 0 100vh;
+        }
+    }
+
+    @keyframes fallOut {
         to {
             translate: 0 100vh;
         }
