@@ -16,7 +16,6 @@ export class KeyInputService {
         if (key.startsWith('Key')) {
             const letter = key.slice(-1).toLowerCase();
             this._eventAggregator.publish('key', letter);
-            console.log(event.code, letter);
         }
 
         // switch (event.code) {
