@@ -9,18 +9,15 @@ export class BlockCustomElement {
         this._element = element;
         this._eventAggregator = eventAggregator;
         this.fallDown = false;
-        this.onBoard = false;
         this._fallTime = .5; // seconds
     }
 
     attached() {
         this._initLetter();
-        this._keyboardListener = this._eventAggregator.subscribe('key', key => this._checkMe(key));
     }
 
-    detached() {
-        this._keyboardListener.dispose();
-    }
+    // detached() {
+    // }
 
     _initLetter() {
         const boardWidth = document.querySelectorAll('board')[0].clientWidth;
@@ -28,17 +25,6 @@ export class BlockCustomElement {
         const cols = Math.floor(boardWidth / width);
         const randomCol = Math.floor(Math.random() * cols);
         this.left = randomCol * width;
-        setTimeout(_ => {
-            this.onBoard = true;
-        }, this._fallTime + 's');
     }
 
-    _checkMe(key) {
-        if (!this.fallDown) {
-            this.fallDown = key == this.letter.letter;
-            setTimeout(_ => {
-                this.letter.remove = true;
-            }, this._fallTime + 's');
-        }
-    }
 }
