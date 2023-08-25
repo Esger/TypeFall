@@ -27,7 +27,7 @@ export class BlockCustomElement {
         const width = this._element.clientWidth;
         const cols = Math.floor(boardWidth / width);
         const randomCol = Math.floor(Math.random() * cols);
-        this._element.style.setProperty("--offsetX", randomCol * width + 'px');
+        this.left = randomCol * width;
         setTimeout(_ => {
             this.onBoard = true;
         }, this._fallTime + 's');
