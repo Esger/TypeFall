@@ -1,7 +1,9 @@
-<template class="${onBoard ? 'onBoard' : ''}">
+<template css="left: ${left}px"
+          class="au-animate animate-drift-down">
     <require from="./block.css"></require>
-    <div class="color--${letter.letter} ${fallDown ? 'fallDown' : ''}">
-        <p textcontent.bind="letter.letter.toUpperCase()"></p>
+
+    <div class="color--${block.letter}">
+        <p textcontent.one-time="block.letter.toUpperCase()"></p>
     </div>
 
 </template>

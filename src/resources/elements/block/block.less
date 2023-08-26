@@ -1,21 +1,37 @@
+.animate-drift-down {
+    &.au-enter {
+        // transition: translate 5s ease-in;
+    }
+
+    &.au-enter-active {
+        animation: fallDown 5s ease-in;
+    }
+
+    &.au-leave {
+        // 
+    }
+
+    &.au-leave-active {
+        animation: fallOut .5s ease-in;
+    }
+}
+
 block {
     font-size   : 2rem;
     line-height : 0;
     position    : absolute;
-    left        : var(--offsetX);
     top         : 0;
     --blockWidth: 5vmin;
-    --offsetX   : 0;
-    --offsetY   : 0;
     width       : var(--blockWidth);
     height      : 100dvh;
 
-    &.onBoard {
-        transition: translate 5s ease-in;
-        translate : 0 100vh;
+    @keyframes fallDown {
+        to {
+            translate: 0 100vh;
+        }
     }
 
-    @keyframes fallDown {
+    @keyframes fallOut {
         to {
             translate: 0 100vh;
         }
