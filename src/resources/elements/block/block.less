@@ -7,12 +7,26 @@
         animation: fallDown 5s ease-in;
     }
 
+    @keyframes fallDown {
+        to {
+            translate: 0 100vh;
+        }
+    }
+}
+
+.animate-fall-out {
     &.au-leave {
         // 
     }
 
     &.au-leave-active {
         animation: fallOut .5s ease-in;
+    }
+
+    @keyframes fallOut {
+        to {
+            translate: 0 100vh;
+        }
     }
 }
 
@@ -25,28 +39,12 @@ block {
     width       : var(--blockWidth);
     height      : 100dvh;
 
-    @keyframes fallDown {
-        to {
-            translate: 0 100vh;
-        }
-    }
-
-    @keyframes fallOut {
-        to {
-            translate: 0 100vh;
-        }
-    }
-
     div {
         position    : absolute;
         display     : grid;
         place-items : center;
         width       : 100%;
         aspect-ratio: 1;
-
-        &.fallDown {
-            animation: fallDown .5s ease-in forwards;
-        }
 
         &.color--a {
             background-color: #FFD700;

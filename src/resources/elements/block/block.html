@@ -2,7 +2,8 @@
           class="au-animate animate-drift-down">
     <require from="./block.css"></require>
 
-    <div class="color--${block.letter}">
+    <div if.bind="!typed"
+         class="color--${block.letter} au-animate animate-fall-out">
         <p textcontent.one-time="block.letter.toUpperCase()"></p>
     </div>
 

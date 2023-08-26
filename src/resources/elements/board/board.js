@@ -40,7 +40,9 @@ export class BoardCustomElement {
     _remove(key) {
         const index = this.blocks.findIndex(block => block.itsMe(key));
         if (index !== -1) {
-            this.blocks.splice(index, 1)
+            setTimeout(() => {
+                this.blocks.splice(index, 1)
+            }, 1000);
         }
     }
 }

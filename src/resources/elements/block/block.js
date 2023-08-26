@@ -8,16 +8,23 @@ export class BlockCustomElement {
     constructor(element, eventAggregator) {
         this._element = element;
         this._eventAggregator = eventAggregator;
-        this.fallDown = false;
-        this._fallTime = .5; // seconds
+        this.typed = false;
     }
 
     attached() {
         this._initLetter();
+        this._keyboardListener = this._eventAggregator.subscribe('key', key => this._check(key));
     }
 
-    // detached() {
-    // }
+    detached() {
+        this._keyboardListener.dispose();
+    }
+
+    _check(key) {
+        if (key === this.block.letter) {
+            this.typed = true;
+        }
+    }
 
     _initLetter() {
         const boardWidth = document.querySelectorAll('board')[0].clientWidth;
