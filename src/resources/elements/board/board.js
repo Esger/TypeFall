@@ -29,8 +29,10 @@ export class BoardCustomElement {
             const randomBlock = {
                 letter: letter,
                 id: letter + performance.now(),
+                typed: false,
+
                 itsMe: key => {
-                    return key == randomBlock.letter
+                    return key == randomBlock.letter && randomBlock.typed;
                 }
             }
             this.blocks.push(randomBlock);

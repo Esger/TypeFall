@@ -8,7 +8,6 @@ export class BlockCustomElement {
     constructor(element, eventAggregator) {
         this._element = element;
         this._eventAggregator = eventAggregator;
-        this.typed = false;
     }
 
     attached() {
@@ -22,7 +21,7 @@ export class BlockCustomElement {
 
     _check(key) {
         if (key === this.block.letter) {
-            this.typed = true;
+            this.block.typed = true;
         }
     }
 
