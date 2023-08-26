@@ -16,11 +16,14 @@ export class BoardCustomElement {
 
     attached() {
         this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
-        this._keyboardListener = this._eventAggregator.subscribe('key', key => this._remove(key));
+        this._letterRemoveInterval = setInterval(_ => this._removeTypedLetters(), this._addInterval * .9);
+        this._keyboardListener = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
     }
 
     detached() {
+        clearInterval(this._letterAdderInterval);
         this._keyboardListener.dispose();
+        this._letterRemoveInterval.dispose();
     }
 
     _addRandomLetter() {
@@ -32,19 +35,24 @@ export class BoardCustomElement {
                 typed: false,
 
                 itsMe: key => {
-                    return key == randomBlock.letter && randomBlock.typed;
+                    return key == randomBlock.letter;
                 }
             }
             this.blocks.push(randomBlock);
         }
     }
 
-    _remove(key) {
+    _markBlockAsTyped(key) {
         const index = this.blocks.findIndex(block => block.itsMe(key));
         if (index !== -1) {
-            setTimeout(() => {
-                this.blocks.splice(index, 1)
-            }, 1000);
+            this.blocks[index].typed = true;
+        }
+    }
+
+    _removeTypedLetters() {
+        const index = this.blocks.findIndex(block => block.typed);
+        if (index !== -1) {
+            this.blocks.splice(index, 1);
         }
     }
 }

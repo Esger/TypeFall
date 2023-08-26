@@ -12,18 +12,10 @@ export class BlockCustomElement {
 
     attached() {
         this._initLetter();
-        this._keyboardListener = this._eventAggregator.subscribe('key', key => this._check(key));
     }
 
-    detached() {
-        this._keyboardListener.dispose();
-    }
-
-    _check(key) {
-        if (key === this.block.letter) {
-            this.block.typed = true;
-        }
-    }
+    // detached() {
+    // }
 
     _initLetter() {
         const boardWidth = document.querySelectorAll('board')[0].clientWidth;
