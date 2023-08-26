@@ -31,11 +31,11 @@
 }
 
 block {
+    --blockWidth: 5vmin;
     font-size   : 2rem;
     line-height : 0;
     position    : absolute;
-    top         : 0;
-    --blockWidth: 5vmin;
+    top         : calc(-1 * var(--blockWidth));
     width       : var(--blockWidth);
     height      : 100dvh;
 
