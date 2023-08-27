@@ -9,13 +9,14 @@ export class BoardCustomElement {
         this._eventAggregator = eventAggregator;
         this._keyInputService = keyInputService;
         this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        this._addInterval = 1000;
         this._maxBlocks = 10;
         this.blocks = [];
-        this._addInterval = 1000;
+        this.maxPiles = 19;
     }
 
     attached() {
-        this._letterRemoveListener = this._eventAggregator.subscribe('remove', id => this._removeLetter(id))
+        this._letterRemoveListener = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
         this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
         this._keyboardListener = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
     }

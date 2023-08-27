@@ -1,9 +1,11 @@
 <template css="left: ${left}px"
-          class="au-animate animate-drift-down ${block.typed ? 'block--typed' : ''} ${block.missed ? 'block--missed' : ''}">
+          class="au-animate animate-drift-down column--${block.column}
+                ${block.typed ? 'block--typed' : ''} 
+                ${block.missed ? 'block--missed' : ''}">
     <require from="./block.css"></require>
 
     <div if.bind="!block.typed"
-         class="color--${block.letter} au-animate animate-fall-out">
+         class="block color--${block.letter} au-animate animate-fall-out">
         <p textcontent.one-time="block.letter.toUpperCase()"></p>
     </div>
 
