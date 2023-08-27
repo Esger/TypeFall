@@ -1,10 +1,38 @@
 .animate-drift-down {
     &.au-enter {
+        outline      : 2px solid greenyellow;
         // transition: translate 5s ease-in;
     }
 
     &.au-enter-active {
-        animation: fallDown 5s ease-in;
+        outline  : 2px solid blue;
+        animation: fallDown 5s ease-in forwards;
+
+        &:not(.block--typed) {
+            // top: auto;
+            outline: 2px dotted grey;
+        }
+
+        &.block--typed {
+            outline: 2px dotted greenyellow;
+        }
+    }
+
+    &.au-entered {
+        outline      : 2px dotted purple;
+        // transition: translate 5s ease-in;
+    }
+
+    &.block--missed {
+        outline        : 4px dotted crimson;
+        top            : 0;
+        display        : flex;
+        flex-direction : column;
+        justify-content: flex-end;
+
+        div {
+            position: relative;
+        }
     }
 
     @keyframes fallDown {
@@ -16,11 +44,16 @@
 
 .animate-fall-out {
     &.au-leave {
-        // 
+        outline: 10px solid greenyellow;
     }
 
     &.au-leave-active {
+        outline  : 10px solid blue;
         animation: fallOut .5s ease-in;
+    }
+
+    &.au-left {
+        outline: 10px dotted purple; // 
     }
 
     @keyframes fallOut {

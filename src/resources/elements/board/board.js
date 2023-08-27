@@ -33,6 +33,7 @@ export class BoardCustomElement {
                 letter: letter,
                 id: letter + performance.now(),
                 typed: false,
+                missed: false,
 
                 itsMe: key => {
                     return key == randomBlock.letter;

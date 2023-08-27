@@ -1,5 +1,5 @@
 <template css="left: ${left}px"
-          class="au-animate animate-drift-down">
+          class="au-animate animate-drift-down ${block.typed ? 'block--typed' : ''} ${block.missed ? 'block--missed' : ''}">
     <require from="./block.css"></require>
 
     <div if.bind="!block.typed"
