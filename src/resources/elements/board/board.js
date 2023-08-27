@@ -15,8 +15,8 @@ export class BoardCustomElement {
     }
 
     attached() {
+        this._letterRemoveListener = this._eventAggregator.subscribe('remove', id => this._removeLetter(id))
         this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
-        this._letterRemoveInterval = setInterval(_ => this._removeTypedLetters(), this._addInterval * .9);
         this._keyboardListener = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
     }
 
@@ -41,6 +41,7 @@ export class BoardCustomElement {
             }
             this.blocks.push(randomBlock);
         }
+
     }
 
     _markBlockAsTyped(key) {
@@ -50,10 +51,11 @@ export class BoardCustomElement {
         }
     }
 
-    _removeTypedLetters() {
-        const index = this.blocks.findIndex(block => block.typed);
+    _removeLetter(id) {
+        const index = this.blocks.findIndex(block => block.id == id);
         if (index !== -1) {
             this.blocks.splice(index, 1);
         }
     }
+
 }

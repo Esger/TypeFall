@@ -12,19 +12,18 @@ export class BlockCustomElement {
     }
 
     attached() {
+        this._$element = $(this._element);
         this._initLetter();
-        $(this._element).one('animationend', _ => this.block.missed = true);
     }
-
-    // detached() {
-    // }
 
     _initLetter() {
         const width = this._element.clientWidth;
         const boardWidth = this._element.parentElement.clientWidth;
         const cols = Math.floor(boardWidth / width);
-        const randomCol = Math.floor(Math.random() * cols);
-        this.left = randomCol * width;
+        this.block.column = Math.floor(Math.random() * cols);
+        this.left = this.block.column * width;
+        this._$element.one('animationend', _ => this.block.missed = true);
+        this._$element.find('div').one('animationend', _ => this._eventAggregator.publish('remove', this.block.id));
     }
 
 }
