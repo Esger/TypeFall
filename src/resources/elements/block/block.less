@@ -1,30 +1,30 @@
 .animate-drift-down {
     &.au-enter {
-        outline      : 2px solid greenyellow;
+        // outline      : 2px solid greenyellow;
         // transition: translate 5s ease-in;
     }
 
     &.au-enter-active {
-        outline  : 2px solid blue;
+        // outline  : 2px solid blue;
         animation: fallDown 5s ease-in forwards;
 
         &:not(.block--typed) {
             // top: auto;
-            outline: 2px dotted grey;
+            // outline: 2px dotted grey;
         }
 
         &.block--typed {
-            outline: 2px dotted greenyellow;
+            // outline: 2px dotted greenyellow;
         }
     }
 
     &.au-entered {
-        outline      : 2px dotted purple;
+        // outline      : 2px dotted purple;
         // transition: translate 5s ease-in;
     }
 
     &.block--missed {
-        outline        : 4px dotted crimson;
+        // outline        : 4px dotted crimson;
         top            : 0;
         display        : flex;
         flex-direction : column;
@@ -44,16 +44,16 @@
 
 .animate-fall-out {
     &.au-leave {
-        outline: 10px solid greenyellow;
+        // outline: 10px solid greenyellow;
     }
 
     &.au-leave-active {
-        outline  : 10px solid blue;
+        // outline  : 10px solid blue;
         animation: fallOut .5s ease-in;
     }
 
     &.au-left {
-        outline: 10px dotted purple; // 
+        // outline: 10px dotted purple; // 
     }
 
     @keyframes fallOut {
@@ -73,11 +73,12 @@ block {
     height      : 100dvh;
 
     div {
-        position    : absolute;
-        display     : grid;
-        place-items : center;
-        width       : 100%;
-        aspect-ratio: 1;
+        position     : absolute;
+        display      : grid;
+        place-items  : center;
+        width        : 100%;
+        border-radius: 4px;
+        aspect-ratio : 1;
 
         &.color--a {
             background-color: #FFD700;
