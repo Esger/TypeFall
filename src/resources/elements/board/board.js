@@ -44,7 +44,7 @@ export class BoardCustomElement {
     }
 
     _markBlockAsTyped(key) {
-        const index = this.blocks.findIndex(block => block.itsMe(key));
+        const index = this.blocks.findIndex(block => block.itsMe(key) && !block.missed);
         if (index !== -1) {
             this.blocks[index].typed = true;
         }
