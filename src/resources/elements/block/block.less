@@ -1,47 +1,3 @@
-.animate-drift-down {
-    &.au-enter {
-        // outline      : 2px solid greenyellow;
-        // transition: translate 5s ease-in;
-    }
-
-    &.au-enter-active {
-        // outline  : 2px solid blue;
-        animation: fallDown 5s ease-in forwards;
-
-        &:not(.block--typed) {
-            // top: auto;
-            // outline: 2px dotted grey;
-        }
-
-        &.block--typed {
-            // outline: 2px dotted greenyellow;
-        }
-    }
-
-    &.au-entered {
-        // outline      : 2px dotted purple;
-        // transition: translate 5s ease-in;
-    }
-
-    &.block--missed {
-        // outline        : 4px dotted crimson;
-        top            : 0;
-        display        : flex;
-        flex-direction : column;
-        justify-content: flex-end;
-
-        div {
-            position: relative;
-        }
-    }
-
-    @keyframes fallDown {
-        to {
-            translate: 0 100vh;
-        }
-    }
-}
-
 .animate-fall-out {
     &.au-leave {
         // outline: 10px solid greenyellow;
@@ -68,10 +24,57 @@ block {
     z-index : 1;
     top     : calc(-1 * var(--blockWidth));
     width   : var(--blockWidth);
-    height  : 100dvh;
+    height  : var(--pileTop);
+    outline : 2px dotted yellow;
 
     .block {
         position: absolute;
+    }
+
+    &.animate-drift-down {
+        --pileTop: 100dvh;
+
+        &.au-enter {
+            // outline      : 2px solid greenyellow;
+            // transition: translate 5s ease-in;
+        }
+
+        &.au-enter-active {
+            // outline  : 2px solid blue;
+            animation: fallDown 5s ease-in forwards;
+
+            &:not(.block--typed) {
+                // top: auto;
+                // outline: 2px dotted grey;
+            }
+
+            &.block--typed {
+                // outline: 2px dotted greenyellow;
+            }
+        }
+
+        &.au-entered {
+            // outline      : 2px dotted purple;
+            // transition: translate 5s ease-in;
+        }
+
+        &.block--missed {
+            // outline        : 4px dotted crimson;
+            top            : 0;
+            display        : flex;
+            flex-direction : column;
+            justify-content: flex-end;
+
+            div {
+                position: relative;
+            }
+        }
+
+        @keyframes fallDown {
+            to {
+                translate: 0 var(--pileTop);
+            }
+        }
     }
 }
 
