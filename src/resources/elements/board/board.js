@@ -10,15 +10,16 @@ export class BoardCustomElement {
         this._keyInputService = keyInputService;
         this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._addInterval = 1000;
-        this._maxBlocks = 10;
+        this._maxBlocks = 100;
         this.blocks = [];
         this.maxPiles = 19;
     }
 
     attached() {
+        this._startGame();
         this._letterRemoveListener = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
-        this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
         this._keyboardListener = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
+        this._startStopListner = this._eventAggregator.subscribe('pause', _ => this._togglePause());
     }
 
     detached() {
@@ -57,6 +58,19 @@ export class BoardCustomElement {
         if (index !== -1) {
             this.blocks.splice(index, 1);
         }
+    }
+
+    _startGame() {
+        this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
+    }
+
+    _pauseGame() {
+        clearInterval(this._letterAdderInterval);
+        this._letterAdderInterval = undefined;
+    }
+
+    _togglePause() {
+        this._letterAdderInterval ? this._pauseGame() : this._startGame();
     }
 
 }
