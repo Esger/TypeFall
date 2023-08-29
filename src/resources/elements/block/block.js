@@ -20,11 +20,11 @@ export class BlockCustomElement {
     _initLetter() {
         this.size = this._element.clientWidth;
         const boardWidth = this._element.parentElement.clientWidth;
-        const cols = Math.floor(boardWidth / this.size);
-        this.block.column = Math.floor(Math.random() * cols);
+        const columnCount = Math.floor(boardWidth / this.size);
+        this.block.column = Math.floor(Math.random() * columnCount);
         this.piles[this.block.column]++;
 
-        const margin = (boardWidth - (cols * this.size)) / 2;
+        const margin = (boardWidth - (columnCount * this.size)) / 2;
         this.left = this.block.column * this.size + margin;
 
         const blocksInTargetPileCount = this.piles[this.block.column] - 1;
