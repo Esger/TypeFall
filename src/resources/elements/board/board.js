@@ -13,19 +13,21 @@ export class BoardCustomElement {
         this._maxBlocks = 100;
         this.blocks = [];
         this.maxPiles = 19;
+        this.pileHeights = [...new Array(this.maxPiles)].map(() => 0);
     }
 
     attached() {
         this._startGame();
-        this._letterRemoveListener = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
-        this._keyboardListener = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
-        this._startStopListner = this._eventAggregator.subscribe('pause', _ => this._togglePause());
+        this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
+        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
+        this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
     }
 
     detached() {
         clearInterval(this._letterAdderInterval);
-        this._keyboardListener.dispose();
         this._letterRemoveInterval.dispose();
+        this._keyboardSubscription.dispose();
+        this._startStopSubscription.dispose();
     }
 
     _addRandomLetter() {
@@ -49,7 +51,9 @@ export class BoardCustomElement {
     _markBlockAsTyped(key) {
         const index = this.blocks.findIndex(block => block.itsMe(key) && !block.missed);
         if (index !== -1) {
-            this.blocks[index].typed = true;
+            const block = this.blocks[index];
+            block.typed = true;
+            this.pileHeights[block.column]--;
         }
     }
 

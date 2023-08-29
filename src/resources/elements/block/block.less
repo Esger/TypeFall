@@ -1,15 +1,8 @@
 .animate-fall-out {
-    &.au-leave {
-        // outline: 10px solid greenyellow;
-    }
 
     &.au-leave-active {
         // outline  : 10px solid blue;
         animation: fallOut .5s ease-in;
-    }
-
-    &.au-left {
-        // outline: 10px dotted purple; // 
     }
 
     @keyframes fallOut {
@@ -20,12 +13,12 @@
 }
 
 block {
-    position: absolute;
-    z-index : 1;
-    top     : calc(-1 * var(--blockWidth));
-    width   : var(--blockWidth);
-    height  : var(--pileTop);
-    outline : 2px dotted yellow;
+    position   : absolute;
+    z-index    : 1;
+    top        : calc(-1 * var(--blockWidth));
+    width      : var(--blockWidth);
+    height     : var(--pileTop);
+    // outline : 2px dotted yellow;
 
     .block {
         position: absolute;
@@ -34,28 +27,9 @@ block {
     &.animate-drift-down {
         --pileTop: 100dvh;
 
-        &.au-enter {
-            // outline      : 2px solid greenyellow;
-            // transition: translate 5s ease-in;
-        }
-
         &.au-enter-active {
             // outline  : 2px solid blue;
             animation: fallDown 5s ease-in forwards;
-
-            &:not(.block--typed) {
-                // top: auto;
-                // outline: 2px dotted grey;
-            }
-
-            &.block--typed {
-                // outline: 2px dotted greenyellow;
-            }
-        }
-
-        &.au-entered {
-            // outline      : 2px dotted purple;
-            // transition: translate 5s ease-in;
         }
 
         &.block--missed {
