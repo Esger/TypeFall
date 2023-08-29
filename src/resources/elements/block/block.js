@@ -33,6 +33,7 @@ export class BlockCustomElement {
         this._element.style.setProperty("--pileTop", newHeight);
 
         this._$element.one('animationend', _ => {
+            const targetPile = $('.pile--' + this.block.column)[0];
             this.block.missed = true;
             this._$element.children('div').appendTo(targetPile);
         });
