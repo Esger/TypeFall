@@ -7,6 +7,18 @@ board {
     align-items    : flex-start;
     position       : relative;
     height         : var(--boardHeight);
+    perspective    : 1000px;
+
+    h1 {
+        opacity         : .5;
+        color           : green;
+        font-size       : 7rem;
+        position        : absolute;
+        text-align      : center;
+        transform       : rotateX(40deg) translateY(70vh);
+        transform-origin: center bottom;
+        width           : 100%;
+    }
 }
 
 .pile {
@@ -15,6 +27,5 @@ board {
     display           : flex;
     flex-direction    : column-reverse;
     justify-content   : flex-start;
-    z-index           : 2;
     // outline        : 2px solid crimson;
 }

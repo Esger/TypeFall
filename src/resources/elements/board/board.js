@@ -4,8 +4,10 @@ import { KeyInputService } from 'services/key-input-service';
 
 @inject(EventAggregator, KeyInputService)
 export class BoardCustomElement {
+    _title = 'TypeFall';
 
     constructor(eventAggregator, keyInputService) {
+        this.title = this._title;
         this._eventAggregator = eventAggregator;
         this._keyInputService = keyInputService;
         this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -66,11 +68,13 @@ export class BoardCustomElement {
 
     _startGame() {
         this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
+        this.title = this._title;
     }
 
     _pauseGame() {
         clearInterval(this._letterAdderInterval);
         this._letterAdderInterval = undefined;
+        this.title = 'Pause';
     }
 
     _togglePause() {
