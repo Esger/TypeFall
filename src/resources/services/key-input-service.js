@@ -17,7 +17,7 @@ export class KeyInputService {
             const letter = key.slice(-1).toLowerCase();
             this._eventAggregator.publish('key', letter);
         }
-        if (key.toLowerCase() === 'space') {
+        if (key.toLowerCase() === 'escape') {
             this._eventAggregator.publish('pause');
         }
 

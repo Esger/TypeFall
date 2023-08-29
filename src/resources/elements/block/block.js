@@ -27,14 +27,16 @@ export class BlockCustomElement {
         const margin = (boardWidth - (cols * this.size)) / 2;
         this.left = this.block.column * this.size + margin;
 
-        const blocksInTargetPileCount = this.piles[this.block.column];
+        const blocksInTargetPileCount = this.piles[this.block.column] - 1;
         const totalBlocksHeight = blocksInTargetPileCount * 5;
         const newHeight = 100 - totalBlocksHeight + 'dvh';
         this._element.style.setProperty("--pileTop", newHeight);
 
         this._$element.one('animationend', _ => {
+            const targetPile = $('.pile--' + this.block.column)[0];
             this.block.missed = true;
             this._$element.children('div').appendTo(targetPile);
+            this._eventAggregator.publish('remove', this.block.id);
         });
 
         this._$element.find('div').one('animationend', _ => this._eventAggregator.publish('remove', this.block.id));
