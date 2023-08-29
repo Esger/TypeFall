@@ -1,5 +1,5 @@
 board {
-    --blockWidth   : 5vw;
+    --blockWidth   : 5vmin;
     --boardHeight  : 100dvh;
     --pileHeight   : var(--boardHeight);
     display        : flex;
@@ -7,7 +7,9 @@ board {
     align-items    : flex-start;
     position       : relative;
     height         : var(--boardHeight);
+    max-width      : 100vmin;
     perspective    : 1000px;
+    margin         : 0 auto;
 
     h1 {
         opacity         : .5;
@@ -27,5 +29,6 @@ board {
     display           : flex;
     flex-direction    : column-reverse;
     justify-content   : flex-start;
+    align-items       : center;
     // outline        : 2px solid crimson;
 }

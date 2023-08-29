@@ -13,9 +13,7 @@ export class BoardCustomElement {
         this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._addInterval = 1000;
         this._maxBlocks = 100;
-        this.blocks = [];
         this.maxPiles = 19;
-        this.pileHeights = [...new Array(this.maxPiles)].map(() => 0);
     }
 
     attached() {
@@ -23,6 +21,13 @@ export class BoardCustomElement {
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
         this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
+        $(window).on('resize', _ => {
+            clearTimeout(this._restartTimeout);
+            this._restartTimeout = setTimeout(_ => {
+                this._pauseGame();
+                this._startGame();
+            }, 50);
+        });
     }
 
     detached() {
@@ -67,6 +72,13 @@ export class BoardCustomElement {
     }
 
     _startGame() {
+        this.blocks = [];
+        this.pileHeights = [...new Array(this.maxPiles)].map(() => 0);
+        $('.pile').children().remove();
+        this._resumeGame();
+    }
+
+    _resumeGame() {
         this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
         this.title = this._title;
     }
@@ -78,7 +90,7 @@ export class BoardCustomElement {
     }
 
     _togglePause() {
-        this._letterAdderInterval ? this._pauseGame() : this._startGame();
+        this._letterAdderInterval ? this._pauseGame() : this._resumeGame();
     }
 
 }
