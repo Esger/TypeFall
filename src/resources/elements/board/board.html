@@ -2,7 +2,11 @@
     <require from="./board.css"></require>
     <require from="elements/block/block"></require>
 
+    <div repeat.for="i of maxPiles"
+         class="pile pile--${i}"></div>
+
     <block repeat.for="block of blocks"
-           block.bind="block"></block>
+           block.bind="block"
+           piles.bind="pileHeights"></block>
 
 </template>

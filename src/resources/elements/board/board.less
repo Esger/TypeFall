@@ -1,5 +1,20 @@
 board {
-    display : block;
-    position: relative;
-    height  : 100%;
+    --blockWidth   : 5vw;
+    --boardHeight  : 100dvh;
+    --pileHeight   : var(--boardHeight);
+    display        : flex;
+    justify-content: center;
+    align-items    : flex-start;
+    position       : relative;
+    height         : var(--boardHeight);
+}
+
+.pile {
+    flex-basis        : var(--blockWidth);
+    height            : var(--pileHeight);
+    display           : flex;
+    flex-direction    : column-reverse;
+    justify-content   : flex-start;
+    z-index           : 2;
+    // outline        : 2px solid crimson;
 }

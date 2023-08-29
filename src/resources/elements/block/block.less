@@ -1,34 +1,8 @@
-.animate-drift-down {
-    &.au-enter {
-        // transition: translate 5s ease-in;
-    }
-
-    &.au-enter-active {
-        animation: fallDown 5s ease-in;
-    }
-
-    &.au-leave {
-        // 
-    }
+.animate-fall-out {
 
     &.au-leave-active {
+        // outline  : 10px solid blue;
         animation: fallOut .5s ease-in;
-    }
-}
-
-block {
-    font-size   : 2rem;
-    line-height : 0;
-    position    : absolute;
-    top         : 0;
-    --blockWidth: 5vmin;
-    width       : var(--blockWidth);
-    height      : 100dvh;
-
-    @keyframes fallDown {
-        to {
-            translate: 0 100vh;
-        }
     }
 
     @keyframes fallOut {
@@ -36,121 +10,158 @@ block {
             translate: 0 100vh;
         }
     }
+}
 
-    div {
-        position    : absolute;
-        display     : grid;
-        place-items : center;
-        width       : 100%;
-        aspect-ratio: 1;
+block {
+    position   : absolute;
+    z-index    : 1;
+    top        : calc(-1 * var(--blockWidth));
+    width      : var(--blockWidth);
+    height     : var(--pileTop);
+    // outline : 2px dotted yellow;
 
-        &.fallDown {
-            animation: fallDown .5s ease-in forwards;
-        }
-
-        &.color--a {
-            background-color: #FFD700;
-        }
-
-        &.color--b {
-            background-color: #FFA500;
-        }
-
-        &.color--c {
-            background-color: #FF6347;
-        }
-
-        &.color--d {
-            background-color: #FF8C00;
-        }
-
-        &.color--e {
-            background-color: #FF69B4;
-        }
-
-        &.color--f {
-            background-color: #FF4500;
-        }
-
-        &.color--g {
-            background-color: #FF7F50;
-        }
-
-        &.color--h {
-            background-color: #FF1493;
-        }
-
-        &.color--i {
-            background-color: #FF1493;
-        }
-
-        &.color--j {
-            background-color: #20B2AA;
-        }
-
-        &.color--k {
-            background-color: #7CFC00;
-        }
-
-        &.color--l {
-            background-color: #ADFF2F;
-        }
-
-        &.color--m {
-            background-color: #40E0D0;
-        }
-
-        &.color--n {
-            background-color: #00CED1;
-        }
-
-        &.color--o {
-            background-color: #00FF7F;
-        }
-
-        &.color--p {
-            background-color: #00FA9A;
-        }
-
-        &.color--q {
-            background-color: #00BFFF;
-        }
-
-        &.color--r {
-            background-color: #1E90FF;
-        }
-
-        &.color--s {
-            background-color: #00FFFF;
-        }
-
-        &.color--t {
-            background-color: #40E0D0;
-        }
-
-        &.color--u {
-            background-color: #ADFF2F;
-        }
-
-        &.color--v {
-            background-color: #7CFC00;
-        }
-
-        &.color--w {
-            background-color: #20B2AA;
-        }
-
-        &.color--x {
-            background-color: #00FF7F;
-        }
-
-        &.color--y {
-            background-color: #00FA9A;
-        }
-
-        &.color--z {
-            background-color: #00CED1;
-        }
+    .block {
+        position: absolute;
     }
 
+    &.animate-drift-down {
+        --pileTop: 100dvh;
+
+        &.au-enter-active {
+            // outline  : 2px solid blue;
+            animation: fallDown 5s ease-in forwards;
+        }
+
+        &.block--missed {
+            // outline        : 4px dotted crimson;
+            top            : 0;
+            display        : flex;
+            flex-direction : column;
+            justify-content: flex-end;
+
+            div {
+                position: relative;
+            }
+        }
+
+        @keyframes fallDown {
+            to {
+                translate: 0 var(--pileTop);
+            }
+        }
+    }
+}
+
+.block {
+    font-size    : 2rem;
+    line-height  : 0;
+    display      : grid;
+    place-items  : center;
+    width        : 100%;
+    border-radius: 4px;
+    aspect-ratio : 1;
+
+    &.color--a {
+        background-color: #FFD700;
+    }
+
+    &.color--b {
+        background-color: #FFA500;
+    }
+
+    &.color--c {
+        background-color: #FF6347;
+    }
+
+    &.color--d {
+        background-color: #FF8C00;
+    }
+
+    &.color--e {
+        background-color: #FF69B4;
+    }
+
+    &.color--f {
+        background-color: #FF4500;
+    }
+
+    &.color--g {
+        background-color: #FF7F50;
+    }
+
+    &.color--h {
+        background-color: #FF1493;
+    }
+
+    &.color--i {
+        background-color: #FF1493;
+    }
+
+    &.color--j {
+        background-color: #20B2AA;
+    }
+
+    &.color--k {
+        background-color: #7CFC00;
+    }
+
+    &.color--l {
+        background-color: #ADFF2F;
+    }
+
+    &.color--m {
+        background-color: #40E0D0;
+    }
+
+    &.color--n {
+        background-color: #00CED1;
+    }
+
+    &.color--o {
+        background-color: #00FF7F;
+    }
+
+    &.color--p {
+        background-color: #00FA9A;
+    }
+
+    &.color--q {
+        background-color: #00BFFF;
+    }
+
+    &.color--r {
+        background-color: #1E90FF;
+    }
+
+    &.color--s {
+        background-color: #00FFFF;
+    }
+
+    &.color--t {
+        background-color: #40E0D0;
+    }
+
+    &.color--u {
+        background-color: #ADFF2F;
+    }
+
+    &.color--v {
+        background-color: #7CFC00;
+    }
+
+    &.color--w {
+        background-color: #20B2AA;
+    }
+
+    &.color--x {
+        background-color: #00FF7F;
+    }
+
+    &.color--y {
+        background-color: #00FA9A;
+    }
+
+    &.color--z {
+        background-color: #00CED1;
+    }
 }

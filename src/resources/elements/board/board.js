@@ -9,18 +9,25 @@ export class BoardCustomElement {
         this._eventAggregator = eventAggregator;
         this._keyInputService = keyInputService;
         this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-        this._maxBlocks = 10;
-        this.blocks = [];
         this._addInterval = 1000;
+        this._maxBlocks = 100;
+        this.blocks = [];
+        this.maxPiles = 19;
+        this.pileHeights = [...new Array(this.maxPiles)].map(() => 0);
     }
 
     attached() {
-        this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
-        this._keyboardListener = this._eventAggregator.subscribe('key', key => this._remove(key));
+        this._startGame();
+        this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
+        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
+        this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
     }
 
     detached() {
-        this._keyboardListener.dispose();
+        clearInterval(this._letterAdderInterval);
+        this._letterRemoveInterval.dispose();
+        this._keyboardSubscription.dispose();
+        this._startStopSubscription.dispose();
     }
 
     _addRandomLetter() {
@@ -29,18 +36,45 @@ export class BoardCustomElement {
             const randomBlock = {
                 letter: letter,
                 id: letter + performance.now(),
+                typed: false,
+                missed: false,
+
                 itsMe: key => {
-                    return key == randomBlock.letter
+                    return key == randomBlock.letter;
                 }
             }
             this.blocks.push(randomBlock);
         }
+
     }
 
-    _remove(key) {
-        const index = this.blocks.findIndex(block => block.itsMe(key));
+    _markBlockAsTyped(key) {
+        const index = this.blocks.findIndex(block => block.itsMe(key) && !block.missed);
         if (index !== -1) {
-            this.blocks.splice(index, 1)
+            const block = this.blocks[index];
+            block.typed = true;
+            this.pileHeights[block.column]--;
         }
     }
+
+    _removeLetter(id) {
+        const index = this.blocks.findIndex(block => block.id == id);
+        if (index !== -1) {
+            this.blocks.splice(index, 1);
+        }
+    }
+
+    _startGame() {
+        this._letterAdderInterval = setInterval(_ => this._addRandomLetter(), this._addInterval);
+    }
+
+    _pauseGame() {
+        clearInterval(this._letterAdderInterval);
+        this._letterAdderInterval = undefined;
+    }
+
+    _togglePause() {
+        this._letterAdderInterval ? this._pauseGame() : this._startGame();
+    }
+
 }
