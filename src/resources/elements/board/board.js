@@ -19,7 +19,7 @@ export class BoardCustomElement {
     attached() {
         this._startGame();
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
-        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._markBlockAsTyped(key));
+        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
         $(window).on('resize', _ => {
             clearTimeout(this._restartTimeout);
@@ -55,13 +55,17 @@ export class BoardCustomElement {
 
     }
 
-    _markBlockAsTyped(key) {
+    _checkTyped(key) {
         const index = this.blocks.findIndex(block => block.itsMe(key) && !block.missed);
         if (index !== -1) {
             const block = this.blocks[index];
             block.typed = true;
             this.pileHeights[block.column]--;
+        } else {
+            // document.querySelectorAll('block').forEach(block => block.classList.add('animation-fall-down'));
+            document.querySelectorAll('block').forEach(block => block.style.setProperty('--animationDuration', '1s'));
         }
+
     }
 
     _removeLetter(id) {
