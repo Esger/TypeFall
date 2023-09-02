@@ -13,6 +13,12 @@
 }
 
 block {
+    @property --animationDuration {
+        syntax       : "<time>";
+        inherits     : false;
+        initial-value: 5s;
+    }
+
     position   : absolute;
     top        : calc(-1 * var(--blockWidth));
     width      : var(--blockWidth);
@@ -24,23 +30,12 @@ block {
     }
 
     &.animate-drift-down {
-        --pileTop: 100dvh;
+        --animationDuration: 5s;
+        --pileTop          : 100dvh;
 
         &.au-enter-active {
             // outline  : 2px solid blue;
-            animation: fallDown 5s ease-in forwards;
-        }
-
-        &.block--missed {
-            // outline        : 4px dotted crimson;
-            top            : 0;
-            display        : flex;
-            flex-direction : column;
-            justify-content: flex-end;
-
-            div {
-                position: relative;
-            }
+            animation: fallDown var(--animationDuration) ease-in forwards;
         }
 
         @keyframes fallDown {
