@@ -1,8 +1,11 @@
 <template>
     <require from="./board.css"></require>
     <require from="elements/block/block"></require>
+    <require from="elements/score/score"></require>
 
     <h1>${title}</h1>
+
+    <score></score>
 
     <div repeat.for="i of maxPiles"
          class="pile pile--${i}"></div>
