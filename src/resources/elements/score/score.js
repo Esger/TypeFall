@@ -9,6 +9,12 @@ export class ScoreCustomElement {
 
     attached() {
         this._scoreListener = this._eventAggregator.subscribe('score', score => {
+            if (score < 0) {
+                this.negative = true;
+                setTimeout(_ => {
+                    this.negative = false;
+                }, 400);
+            }
             this.score += score;
         });
     }
