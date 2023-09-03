@@ -13,6 +13,7 @@ export class BoardCustomElement {
         this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._addInterval = 1000;
         this._maxBlocks = 100;
+        this._typedCount = 0;
         this.maxPiles = 19;
     }
 
@@ -21,6 +22,7 @@ export class BoardCustomElement {
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
+        this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
         $(window).on('resize', _ => {
             clearTimeout(this._restartTimeout);
             this._restartTimeout = setTimeout(_ => {
@@ -35,6 +37,17 @@ export class BoardCustomElement {
         this._letterRemoveInterval.dispose();
         this._keyboardSubscription.dispose();
         this._startStopSubscription.dispose();
+    }
+
+    _adjustGameSpeed(score) {
+        this._typedCount += score;
+        if (this._typedCount > 10) {
+            this._addInterval = Math.max(this._addInterval * .95, 400);
+            this._typedCount = 0;
+            console.log(this._addInterval);
+            this._pauseGame();
+            this._resumeGame();
+        }
     }
 
     _addRandomLetter() {
@@ -62,10 +75,10 @@ export class BoardCustomElement {
             block.typed = true;
             this.pileHeights[block.column]--;
         } else {
-            // document.querySelectorAll('block').forEach(block => block.classList.add('animation-fall-down'));
-            document.querySelectorAll('block').forEach(block => block.style.setProperty('--animationDuration', '1s'));
+            const blocks = document.querySelectorAll('block');
+            this._eventAggregator.publish('score', -blocks.length);
+            blocks.forEach(block => block.style.setProperty('--animationDuration', '1s'));
         }
-
     }
 
     _removeLetter(id) {
