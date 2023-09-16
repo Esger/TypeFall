@@ -39,7 +39,10 @@ export class BlockCustomElement {
             this._eventAggregator.publish('remove', this.block.id);
         });
 
-        this._$element.find('div').one('animationend', _ => this._eventAggregator.publish('remove', this.block.id));
+        this._$element.find('div').one('animationend', _ => {
+            this._eventAggregator.publish('score', 1);
+            this._eventAggregator.publish('remove', this.block.id);
+        });
     }
 
 }

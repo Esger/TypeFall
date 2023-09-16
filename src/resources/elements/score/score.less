@@ -1,0 +1,32 @@
+score {
+    position   : absolute;
+    top        : 0;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
+    color      : green;
+
+    p {
+        margin-inline: 2rem;
+    }
+
+    p,
+    label {
+        font-size: 2rem;
+    }
+
+    input {
+        width       : 1rem;
+        aspect-ratio: 1;
+    }
+
+    h2 {
+        margin    : 1rem 2rem 1rem auto;
+        font-size : 3rem;
+        transition: color 0.2s ease;
+
+        &.flash--red {
+            color: tomato;
+        }
+    }
+}
