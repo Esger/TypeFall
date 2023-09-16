@@ -59,8 +59,15 @@ export class BoardCustomElement {
 
     _nextLetter() {
         if (this.blocks.length > this._maxBlocks) return;
-        const letter = this.random ? this._letters[Math.floor(Math.random() * this._letters.length)] : this._text.charAt(this.nextCharIndex);
-        this.nextCharIndex = Math.round(this.nextCharIndex + 1, this._text.length);
+        let letter;
+        if (this.random) {
+            letter = this._letters[Math.floor(Math.random() * this._letters.length)];
+        } else {
+            const nextChar = this._text.charAt(this.nextCharIndex).toLocaleLowerCase();
+            letter = this._letters.includes(nextChar) ? nextChar : undefined;
+            this.nextCharIndex = Math.round(this.nextCharIndex + 1, this._text.length);
+            if (!letter) return;
+        }
         const nextBlock = {
             letter: letter,
             id: letter + performance.now(),
