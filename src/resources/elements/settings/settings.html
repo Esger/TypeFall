@@ -1,0 +1,15 @@
+<template>
+    <require from="./settings.css"></require>
+
+    <p>settings</p>
+
+    <fieldset>
+        <label>
+            <input 
+                type="checkbox" 
+                change.trigger="randomToggle()"
+                checked.bind="randomMode">random mode
+        </label>
+    </fieldset>
+
+</template>

@@ -25,10 +25,6 @@ export class ScoreCustomElement {
         this._scoreListener.dispose();
     }
 
-    randomToggle() {
-        this._eventAggregator.publish('randomToggle', this.randomMode);
-    }
-
     valueChanged(newValue, oldValue) {
         // score flasht of zo
     }
