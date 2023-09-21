@@ -74,7 +74,7 @@ export class BoardCustomElement {
             typed: false,
             missed: false,
 
-            itsMe: key => {
+            is: key => {
                 return key == nextBlock.letter;
             }
         }
@@ -82,7 +82,7 @@ export class BoardCustomElement {
     }
 
     _checkTyped(key) {
-        const index = this.blocks.findIndex(block => block.itsMe(key) && !block.missed);
+        const index = this.blocks.findIndex(block => block.is(key) && !block.missed && !block.typed);
         if (index !== -1) {
             const block = this.blocks[index];
             block.typed = true;
