@@ -5,7 +5,9 @@ export function configure(aurelia) {
     aurelia.use
         .standardConfiguration()
         .feature('resources')
-        .plugin(PLATFORM.moduleName('aurelia-animator-css', { useAnimationDoneClasses: true }));
+        .plugin(PLATFORM.moduleName('aurelia-animator-css', c => c.useAnimationDoneClasses = true));
+    // .plugin('aurelia-animator-css', c => c.useAnimationDoneClasses = true);
+    // .plugin(PLATFORM.moduleName('aurelia-animator-css', { useAnimationDoneClasses: true }));
 
     aurelia.use.developmentLogging(environment.debug ? 'debug' : 'warn');
 
