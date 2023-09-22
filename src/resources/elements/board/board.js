@@ -1,17 +1,16 @@
 import { bindable, inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { KeyInputService } from 'services/key-input-service';
 
-@inject(EventAggregator, KeyInputService)
+@inject(EventAggregator)
 export class BoardCustomElement {
 
-    constructor(eventAggregator, keyInputService) {
+    constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
-        this._keyInputService = keyInputService;
         this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._addInterval = 1000;
         this._maxBlocks = 100;
         this._typedCount = 0;
+        this._paused = true;
         this.maxPiles = 19;
         this.random = false;
         this._text = 'In de schemering van de tijd, waar dromen en werkelijkheid elkaar ontmoeten als oude vrienden, strekte het duistere mysterie van de nacht zich uit over de stad. Een stad diep doordrenkt met geheimen, verborgen achter de facade van schijnbare normaliteit. Hier begint ons verhaal, waarvan de hoofdrolspeler zijn weg baant door het doolhof van zijn eigen ziel, terwijl de schaduwen fluisteren en de maan haar bleke licht werpt op de verborgen waarheden die zich in de donkerste hoeken verschuilen. Dit is een verhaal van betovering en bedrog, van onverwachte ontmoetingen en vergeten herinneringen, een verhaal dat zich afspeelt in een wereld waar de grens tussen wat echt is en wat slechts een droom lijkt te vervagen, zoals de zachte afdruk van een verloren kus op de rand van de nacht.';
@@ -104,16 +103,19 @@ export class BoardCustomElement {
         this.blocks = [];
         this.pileHeights = [...new Array(this.maxPiles)].map(() => 0);
         $('.pile').children().remove();
-        this._resumeGame();
+        this._addInterval = 1000;
+        this._paused && this._resumeGame();
     }
 
     _resumeGame() {
+        clearInterval(this._letterAdderInterval);
         this._letterAdderInterval = setInterval(_ => this._nextLetter(), this._addInterval);
     }
 
     _pauseGame() {
         clearInterval(this._letterAdderInterval);
         this._letterAdderInterval = undefined;
+        this._paused = true;
     }
 
     _togglePause() {

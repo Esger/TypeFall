@@ -24,8 +24,4 @@ export class ScoreCustomElement {
     detached() {
         this._scoreListener.dispose();
     }
-
-    valueChanged(newValue, oldValue) {
-        // score flasht of zo
-    }
 }
