@@ -10,7 +10,7 @@ export class ScoreCustomElement {
     }
 
     attached() {
-        this._scoreListener = this._eventAggregator.subscribe('score', score => {
+        this._scoreSubscription = this._eventAggregator.subscribe('score', score => {
             if (score < 0) {
                 this.negative = true;
                 setTimeout(_ => {
@@ -19,9 +19,11 @@ export class ScoreCustomElement {
             }
             this.score += score;
         });
+        this._startGameSubscription = this._eventAggregator.subscribe('startGame', _ => { this.score = 0 });
     }
 
     detached() {
-        this._scoreListener.dispose();
+        this._scoreSubscription.dispose();
+        this._startGameSubscription.dispose();
     }
 }

@@ -12,12 +12,12 @@ export class KeyInputService {
     }
 
     handleKeyInput(event) {
-        const key = event.code
-        if (key.startsWith('Key')) {
-            const letter = key.slice(-1).toLowerCase();
+        const key = event.code.toLowerCase()
+        if (key.startsWith('key')) {
+            const letter = key.slice(-1);
             this._eventAggregator.publish('key', letter);
         }
-        if (key.toLowerCase() === 'escape') {
+        if (key === 'escape') {
             this._eventAggregator.publish('pause');
         }
 
