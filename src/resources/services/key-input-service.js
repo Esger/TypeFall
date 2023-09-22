@@ -12,40 +12,22 @@ export class KeyInputService {
     }
 
     handleKeyInput(event) {
-        const key = event.code
-        if (key.startsWith('Key')) {
-            const letter = key.slice(-1).toLowerCase();
-            this._eventAggregator.publish('key', letter);
-        }
-        if (key.toLowerCase() === 'escape') {
-            this._eventAggregator.publish('pause');
-        }
+        const key = event.code.toLowerCase()
 
-        // switch (event.code) {
-        //     case 'ArrowLeft':
-        //         this._eventAggregator.publish('moveKeyPressed', 'left');
-        //         break;
-        //     case 'ArrowUp':
-        //         this._eventAggregator.publish('moveKeyPressed', 'up');
-        //         break;
-        //     case 'ArrowRight':
-        //         this._eventAggregator.publish('moveKeyPressed', 'right');
-        //         break;
-        //     case 'ArrowDown':
-        //         this._eventAggregator.publish('moveKeyPressed', 'down');
-        //         break;
-        //     case 'Enter':
-        //         this._eventAggregator.publish('start');
-        //         break;
-        //     case 'Space':
-        //         this._eventAggregator.publish('start');
-        //         break;
-        //     case 'Escape':
-        //         this._eventAggregator.publish('giveUp');
-        //         break;
-        //     default:
-        //         this._eventAggregator.publish('KeyPressed', 'somekey');
-        // }
+        switch (key) {
+            case 'enter':
+                this._eventAggregator.publish('startGame');
+                break;
+            case 'escape':
+                this._eventAggregator.publish('pause');
+                break;
+            default:
+                if (key.startsWith('key')) {
+                    const letter = key.slice(-1);
+                    this._eventAggregator.publish('key', letter);
+                }
+                break;
+        }
         return true;
     }
 

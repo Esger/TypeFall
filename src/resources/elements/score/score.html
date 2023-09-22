@@ -1,8 +1,5 @@
 <template>
     <require from="./score.css"></require>
-    <p><label><input 
-            type="checkbox" 
-            change.trigger="randomToggle()"
-            checked.bind="randomMode"> random mode</label></p>
+
     <h2 class="${negative ? 'flash--red' : ''}">${score}</h2>
 </template>

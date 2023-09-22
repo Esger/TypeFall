@@ -1,0 +1,19 @@
+<template class="${initial ? 'initial' : 'started'}">
+    <require from="./settings.css"></require>
+
+    <p>settings</p>
+
+    <fieldset>
+        <label>
+            <input 
+                type="checkbox" 
+                change.trigger="randomToggle()"
+                checked.bind="randomMode">random mode
+        </label>
+    </fieldset>
+
+    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
+
+    <p class="hamburger">=</p>
+
+</template>

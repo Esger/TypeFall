@@ -2,7 +2,17 @@
     <require from="./app.css"></require>
     <require from="./reset.css"></require>
     <require from="elements/board/board"></require>
+    <require from="elements/settings/settings"></require>
+    <require from="elements/score/score"></require>
 
-    <board></board>
+    <div class="title ${pause ? 'title--hidden' : 'title--visible'}">
+        <h1>${title}</h1>
+    </div>
+    <board class="${pause ? 'board--dimmed' : ''}"></board>
+    <score></score>
+    <settings></settings>
+    <div class="pause ${pause ? 'pause--visible' : 'pause--hidden'}">
+        <h2>pause</h2>
+    </div>
 
 </template>

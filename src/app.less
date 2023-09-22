@@ -1,6 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Inline&family=Bungee+Outline&family=Open+Sans:wght@400;600&display=swap');
+
 body {
     position        : relative;
     background-color: black;
     overflow        : hidden;
     font-family     : 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.blocks,
+.piles,
+.title,
+.pause {
+    position       : absolute;
+    inset          : 0;
+    display        : flex;
+    justify-content: center;
+    align-items    : flex-start;
+}
+
+board {
+    opacity   : 1;
+    transition: opacity 200ms ease;
+
+    &.board--dimmed {
+        opacity: .5;
+    }
+}
+
+.title,
+.pause {
+    perspective: 1000px;
+    opacity    : 1;
+    transition : opacity 200ms ease;
+
+    h1,
+    h2 {
+        font-family     : 'Bungee Outline', cursive;
+        font-weight     : 500;
+        opacity         : .5;
+        color           : green;
+        font-size       : 6rem;
+        position        : absolute;
+        text-align      : center;
+        transform       : rotateX(40deg) translateY(70vh);
+        transform-origin: center bottom;
+        width           : 100%;
+    }
+}
+
+.title.title--hidden,
+.pause.pause--hidden {
+    opacity: 0;
+}
+
+.pause {
+    pointer-events: none;
+
+    h2 {
+        opacity: 1;
+    }
 }
