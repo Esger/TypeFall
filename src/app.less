@@ -7,10 +7,34 @@ body {
     font-family     : 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
-.title {
-    perspective: 1000px;
+.blocks,
+.piles,
+.title,
+.pause {
+    position       : absolute;
+    inset          : 0;
+    display        : flex;
+    justify-content: center;
+    align-items    : flex-start;
+}
 
-    h1 {
+board {
+    opacity   : 1;
+    transition: opacity 200ms ease;
+
+    &.board--dimmed {
+        opacity: .5;
+    }
+}
+
+.title,
+.pause {
+    perspective: 1000px;
+    opacity    : 1;
+    transition : opacity 200ms ease;
+
+    h1,
+    h2 {
         font-family     : 'Bungee Outline', cursive;
         font-weight     : 500;
         opacity         : .5;
@@ -21,5 +45,18 @@ body {
         transform       : rotateX(40deg) translateY(70vh);
         transform-origin: center bottom;
         width           : 100%;
+    }
+}
+
+.title.title--hidden,
+.pause.pause--hidden {
+    opacity: 0;
+}
+
+.pause {
+    pointer-events: none;
+
+    h2 {
+        opacity: 1;
     }
 }

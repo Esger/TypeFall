@@ -5,13 +5,12 @@ import $ from 'jquery';
 
 @inject(EventAggregator, KeyInputService)
 export class App {
-    _TITLE = 'TypeFall';
 
     constructor(eventAggregator, keyInputService) {
-        this.title = this._TITLE;
+        this.title = 'TypeFall';
         this._eventAggregator = eventAggregator;
         this._keyInputService = keyInputService;
-        this._pause = false;
+        this.pause = false;
     }
 
     attached() {
@@ -24,7 +23,6 @@ export class App {
     }
 
     _togglePause(value) {
-        this._pause = value == false ? false : !this._pause;
-        this.title = this._pause ? 'Pause' : this._TITLE;
+        this.pause = value === false ? false : !this.pause;
     }
 }
