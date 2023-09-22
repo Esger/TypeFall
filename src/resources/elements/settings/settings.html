@@ -1,4 +1,4 @@
-<template class="${initial ? '' : 'started'}">
+<template class="${initial ? 'initial' : 'started'}">
     <require from="./settings.css"></require>
 
     <p>settings</p>
@@ -13,5 +13,7 @@
     </fieldset>
 
     <button click.delegate="startGame()">${initial ? 'Start' : 'Restart'}</button>
+
+    <p class="hamburger">=</p>
 
 </template>
