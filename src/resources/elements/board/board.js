@@ -19,7 +19,7 @@ export class BoardCustomElement {
     }
 
     attached() {
-        this._startGame();
+        this._startStopSubscription = this._eventAggregator.subscribe('startGame', _ => this._startGame());
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
@@ -38,6 +38,7 @@ export class BoardCustomElement {
 
     detached() {
         clearInterval(this._letterAdderInterval);
+        this._startStopSubscription.dispose();
         this._letterRemoveInterval.dispose();
         this._keyboardSubscription.dispose();
         this._startStopSubscription.dispose();

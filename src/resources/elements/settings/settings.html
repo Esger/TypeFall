@@ -1,4 +1,4 @@
-<template>
+<template class="${initial ? '' : 'started'}">
     <require from="./settings.css"></require>
 
     <p>settings</p>
@@ -11,5 +11,7 @@
                 checked.bind="randomMode">random mode
         </label>
     </fieldset>
+
+    <button click.delegate="startGame()">${initial ? 'Start' : 'Restart'}</button>
 
 </template>
