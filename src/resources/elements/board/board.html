@@ -1,17 +1,16 @@
 <template>
     <require from="./board.css"></require>
     <require from="elements/block/block"></require>
-    <require from="elements/score/score"></require>
 
-    <h1>${title}</h1>
+    <div class="piles">
+        <div repeat.for="i of maxPiles"
+             class="pile pile--${i}"></div>
+    </div>
 
-    <score></score>
-
-    <div repeat.for="i of maxPiles"
-         class="pile pile--${i}"></div>
-
-    <block repeat.for="block of blocks"
-           block.bind="block"
-           piles.bind="pileHeights"></block>
+    <div class="blocks">
+        <block repeat.for="block of blocks"
+               block.bind="block"
+               piles.bind="pileHeights"></block>
+    </div>
 
 </template>

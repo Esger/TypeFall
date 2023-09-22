@@ -1,28 +1,23 @@
 board {
-    --blockWidth   : 5vmin;
-    --boardHeight  : 100dvh;
-    --pileHeight   : var(--boardHeight);
+    --blockWidth : 5vmin;
+    --boardHeight: 100dvh;
+    --pileHeight : var(--boardHeight);
+    display      : block;
+    position     : relative;
+    height       : var(--boardHeight);
+    max-width    : 100vmin;
+    margin       : 0 auto;
+}
+
+.blocks,
+.piles,
+.title {
+    position       : absolute;
+    inset          : 0;
     display        : flex;
     justify-content: center;
     align-items    : flex-start;
-    position       : relative;
-    height         : var(--boardHeight);
-    max-width      : 100vmin;
-    perspective    : 1000px;
-    margin         : 0 auto;
 
-    h1 {
-        font-family     : 'Bungee Outline', cursive;
-        font-weight     : 500;
-        opacity         : .5;
-        color           : green;
-        font-size       : 6rem;
-        position        : absolute;
-        text-align      : center;
-        transform       : rotateX(40deg) translateY(70vh);
-        transform-origin: center bottom;
-        width           : 100%;
-    }
 }
 
 .pile {

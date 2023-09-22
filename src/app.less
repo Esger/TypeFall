@@ -1,8 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Bungee+Outline&family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Inline&family=Bungee+Outline&family=Open+Sans:wght@400;600&display=swap');
 
 body {
     position        : relative;
     background-color: black;
     overflow        : hidden;
     font-family     : 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.title {
+    perspective: 1000px;
+
+    h1 {
+        font-family     : 'Bungee Outline', cursive;
+        font-weight     : 500;
+        opacity         : .5;
+        color           : green;
+        font-size       : 6rem;
+        position        : absolute;
+        text-align      : center;
+        transform       : rotateX(40deg) translateY(70vh);
+        transform-origin: center bottom;
+        width           : 100%;
+    }
 }
