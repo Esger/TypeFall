@@ -9,12 +9,15 @@ export class SettingsCustomElement {
         this.initial = true;
     }
 
+    attached() {
+        this._startGameSubscription = this._eventAggregator.subscribeOnce('startGame', _ => this.initial = false);
+    }
+
     randomToggle() {
         this._eventAggregator.publish('randomToggle', this.randomMode);
     }
 
     startGame() {
         this._eventAggregator.publish('startGame');
-        this.initial = false;
     }
 }
