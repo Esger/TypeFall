@@ -6,14 +6,18 @@ export class BoardCustomElement {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
-        this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        this._letters = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._addInterval = 1000;
         this._maxBlocks = 100;
         this._typedCount = 0;
         this._paused = true;
         this.maxPiles = 19;
         this.random = false;
-        this._text = 'In de schemering van de tijd, waar dromen en werkelijkheid elkaar ontmoeten als oude vrienden, strekte het duistere mysterie van de nacht zich uit over de stad. Een stad diep doordrenkt met geheimen, verborgen achter de facade van schijnbare normaliteit. Hier begint ons verhaal, waarvan de hoofdrolspeler zijn weg baant door het doolhof van zijn eigen ziel, terwijl de schaduwen fluisteren en de maan haar bleke licht werpt op de verborgen waarheden die zich in de donkerste hoeken verschuilen. Dit is een verhaal van betovering en bedrog, van onverwachte ontmoetingen en vergeten herinneringen, een verhaal dat zich afspeelt in een wereld waar de grens tussen wat echt is en wat slechts een droom lijkt te vervagen, zoals de zachte afdruk van een verloren kus op de rand van de nacht.';
+        this._texts = {
+            'nl': 'In de schemering van de tijd, waar dromen en werkelijkheid elkaar ontmoeten als oude vrienden, strekte het duistere mysterie van de nacht zich uit over de stad. Een stad diep doordrenkt met geheimen, verborgen achter de facade van schijnbare normaliteit. Hier begint ons verhaal, waarvan de hoofdrolspeler zijn weg baant door het doolhof van zijn eigen ziel, terwijl de schaduwen fluisteren en de maan haar bleke licht werpt op de verborgen waarheden die zich in de donkerste hoeken verschuilen. Dit is een verhaal van betovering en bedrog, van onverwachte ontmoetingen en vergeten herinneringen, een verhaal dat zich afspeelt in een wereld waar de grens tussen wat echt is en wat slechts een droom lijkt te vervagen, zoals de zachte afdruk van een verloren kus op de rand van de nacht.',
+            'en': 'In the twilight of time, where dreams and reality intertwine like old friends, the enigmatic shroud of night stretched across the city. A city steeped in secrets, concealed beneath the veneer of apparent normalcy. Here, our tale commences, with its protagonist navigating the labyrinth of his own soul, as shadows whisper and the moon casts its pale light upon the hidden truths lurking in the darkest corners. This is a narrative of enchantment and deception, of chance encounters and forgotten memories, a tale set in a realm where the boundary between what is real and what appears to be but a dream blurs, much like the gentle imprint of a lost kiss on the edge of night.',
+            'random': 'random'
+        };
         this.nextCharIndex = 0;
     }
 
@@ -23,8 +27,9 @@ export class BoardCustomElement {
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
-        this._randomToggleSubscription = this._eventAggregator.subscribe('randomToggle', value => {
-            this.random = value;
+        this._languageToggleSubscription = this._eventAggregator.subscribe('languageChanged', value => {
+            this.random = value == 'random';
+            this._text = this._texts[value];
         });
         $(window).on('resize', _ => {
             clearTimeout(this._restartTimeout);
@@ -41,7 +46,7 @@ export class BoardCustomElement {
         this._letterRemoveInterval.dispose();
         this._keyboardSubscription.dispose();
         this._startStopSubscription.dispose();
-        this._randomToggleSubscription.dispose();
+        this._languageToggleSubscription.dispose();
     }
 
     _adjustGameSpeed(score) {

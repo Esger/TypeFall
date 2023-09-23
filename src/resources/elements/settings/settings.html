@@ -4,11 +4,12 @@
     <p>settings</p>
 
     <fieldset>
-        <label>
-            <input 
-                type="checkbox" 
-                change.trigger="randomToggle()"
-                checked.bind="randomMode">random mode
+        <label repeat.for="lang of languages">
+          <input type="radio" name="languages"
+                  value.bind="lang.id" 
+                  model.bind="lang" 
+                  checked.bind="selectedLanguage">
+          ${lang.name}
         </label>
     </fieldset>
 

@@ -21,6 +21,9 @@ export class KeyInputService {
             case 'escape':
                 this._eventAggregator.publish('pause');
                 break;
+            case 'space':
+                this._eventAggregator.publish('key', ' ');
+                break;
             default:
                 if (key.startsWith('key')) {
                     const letter = key.slice(-1);
