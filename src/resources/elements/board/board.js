@@ -6,7 +6,7 @@ export class BoardCustomElement {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
-        this._letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        this._letters = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._addInterval = 1000;
         this._maxBlocks = 100;
         this._typedCount = 0;

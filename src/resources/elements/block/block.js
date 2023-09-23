@@ -15,6 +15,7 @@ export class BlockCustomElement {
     attached() {
         this._$element = $(this._element);
         this._initLetter();
+        this._score = this.block.letter == ' ' ? 5 : 1;
     }
 
     _initLetter() {
@@ -40,7 +41,7 @@ export class BlockCustomElement {
         });
 
         this._$element.find('div').one('animationend', _ => {
-            this._eventAggregator.publish('score', 1);
+            this._eventAggregator.publish('score', this._score);
             this._eventAggregator.publish('remove', this.block.id);
         });
     }
