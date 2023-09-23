@@ -7,8 +7,9 @@ export class KeyInputService {
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
         document.addEventListener('keydown', event => {
+            event.preventDefault(); // spatie moet laatst geklikte button niet triggeren.
             this.handleKeyInput(event);
-        });
+        }, { passive: false });
     }
 
     handleKeyInput(event) {
