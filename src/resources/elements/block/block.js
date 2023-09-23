@@ -37,6 +37,7 @@ export class BlockCustomElement {
             const targetPile = $('.pile--' + this.block.column)[0];
             this.block.missed = true;
             this._$element.children('div').appendTo(targetPile);
+            this._eventAggregator.publish('score', -1);
             this._eventAggregator.publish('remove', this.block.id);
         });
 

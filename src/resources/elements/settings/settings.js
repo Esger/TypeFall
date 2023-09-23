@@ -1,6 +1,7 @@
 import { inject, observable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { SettingsService } from 'services/settings-service';
+
 @inject(EventAggregator, SettingsService)
 export class SettingsCustomElement {
     @observable selectedLanguage;
