@@ -1,7 +1,9 @@
 <template class="${initial ? 'initial' : 'started'}">
     <require from="./settings.css"></require>
 
-    <p>settings</p>
+    <h2>settings</h2>
+
+    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
 
     <fieldset>
         <label repeat.for="lang of languages">
@@ -13,7 +15,9 @@
         </label>
     </fieldset>
 
-    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
+    <p class="hint">Press 'esc' to pause</p>
+
+    <p><a href="/"><small>&copy ashware</small></a></p>
 
     <p class="hamburger">=</p>
 

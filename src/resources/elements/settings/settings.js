@@ -1,12 +1,14 @@
 import { inject, observable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import { SettingsService } from 'services/settings-service';
 
-@inject(EventAggregator)
+@inject(EventAggregator, SettingsService)
 export class SettingsCustomElement {
     @observable selectedLanguage;
 
-    constructor(eventAggregator) {
+    constructor(eventAggregator, settingsService) {
         this._eventAggregator = eventAggregator;
+        this._settingsService = settingsService;
         this.initial = true;
         this.languages = [{
             id: 'en',
@@ -18,10 +20,11 @@ export class SettingsCustomElement {
             id: 'random',
             name: 'Random mode'
         }];
-        this.selectedLanguage = this.languages[0];
     }
 
     attached() {
+        const savedLanguage = this._settingsService.getSettings('lang')?.id || 'en';
+        this.selectedLanguage = this.languages.find(lang => lang.id === savedLanguage);
         this._startGameSubscription = this._eventAggregator.subscribeOnce('startGame', _ => this.initial = false);
         this._eventAggregator.publish('languageChanged', this.selectedLanguage.id);
     }
@@ -32,5 +35,6 @@ export class SettingsCustomElement {
 
     selectedLanguageChanged(newValue) {
         this._eventAggregator.publish('languageChanged', newValue.id);
+        this._settingsService.saveSettings('lang', newValue);
     }
 }

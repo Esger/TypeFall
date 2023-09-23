@@ -7,13 +7,24 @@ score {
     color      : green;
 
     h2 {
-        font-family: 'Bungee Outline', cursive;
-        font-size  : 3rem;
         margin     : 1rem 2rem 1rem auto;
-        transition : color 0.2s ease;
+        display    : flex;
+        align-items: center;
+        gap        : 2rem;
 
-        &.flash--red {
-            color: tomato;
+        span {
+            font-family: 'Bungee Outline', cursive;
+            font-size  : 3rem;
+            transition : color 0.2s ease;
+
+            &.flash--red {
+                color: tomato;
+            }
+        }
+
+        high {
+            font-family: 'Bungee Hairline', cursive;
+            font-size  : 2rem;
         }
     }
 }

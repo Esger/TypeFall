@@ -1,15 +1,20 @@
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-@inject(EventAggregator)
+import { SettingsService } from 'services/settings-service';
+
+@inject(EventAggregator, SettingsService)
 export class ScoreCustomElement {
 
-    constructor(eventAggregator) {
+    constructor(eventAggregator, settingsService) {
         this.score = 0;
+        this.highScore = 0;
         this.randomMode = false;
         this._eventAggregator = eventAggregator;
+        this._settingsService = settingsService;
     }
 
     attached() {
+        this.highScore = this._settingsService.getSettings('highScore') || 0;
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => {
             if (score < 0) {
                 this.negative = true;
@@ -18,6 +23,7 @@ export class ScoreCustomElement {
                 }, 400);
             }
             this.score += score;
+            this._checkHighScore();
         });
         this._startGameSubscription = this._eventAggregator.subscribe('startGame', _ => { this.score = 0 });
     }
@@ -25,5 +31,10 @@ export class ScoreCustomElement {
     detached() {
         this._scoreSubscription.dispose();
         this._startGameSubscription.dispose();
+    }
+
+    _checkHighScore() {
+        this.highScore = this.score > this.highScore ? this.score : this.highScore;
+        this._settingsService.saveSettings('highScore', this.highScore);
     }
 }

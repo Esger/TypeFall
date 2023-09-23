@@ -1,5 +1,8 @@
 <template>
     <require from="./score.css"></require>
 
-    <h2 class="${negative ? 'flash--red' : ''}">${score}</h2>
+    <h2>
+        <high show.bind="highScore > 0">high: ${highScore}</high>
+        <span class="${negative ? 'flash--red' : ''}">${score}</span>
+    </h2>
 </template>
