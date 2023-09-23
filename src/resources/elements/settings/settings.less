@@ -53,6 +53,10 @@ settings {
         }
     }
 
+    label {
+        display: block;
+    }
+
     fieldset {
         border : none;
         padding: 0;
@@ -66,6 +70,7 @@ settings {
     }
 
     input[type=checkbox],
+    input[type=radio],
     button {
         background-color: darken(green, 20);
         border          : 1px solid lightgray;
@@ -73,7 +78,8 @@ settings {
         transition      : background-color 200ms ease-in-out;
     }
 
-    input[type=checkbox] {
+    input[type=checkbox],
+    input[type=radio] {
         -webkit-appearance: none;
         display           : inline-block;
         width             : 1.5rem;
@@ -84,6 +90,10 @@ settings {
         &:checked {
             background-color: lightgreen;
         }
+    }
+
+    input[type=radio] {
+        border-radius: 50%;
     }
 
     button {
