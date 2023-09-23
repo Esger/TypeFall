@@ -4,6 +4,7 @@
     <h2>settings</h2>
 
     <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
+    <button if.bind="!initial" click.delegate="pauseGame()">${paused ? 'Resume (escape)' : 'Pause (escape)'}</button>
 
     <fieldset>
         <label repeat.for="lang of languages">

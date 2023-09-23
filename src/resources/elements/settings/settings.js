@@ -10,6 +10,7 @@ export class SettingsCustomElement {
         this._eventAggregator = eventAggregator;
         this._settingsService = settingsService;
         this.initial = true;
+        this.paused = true;
         this.languages = [{
             id: 'en',
             name: 'English'
@@ -25,12 +26,20 @@ export class SettingsCustomElement {
     attached() {
         const savedLanguage = this._settingsService.getSettings('lang')?.id || 'en';
         this.selectedLanguage = this.languages.find(lang => lang.id === savedLanguage);
-        this._startGameSubscription = this._eventAggregator.subscribeOnce('startGame', _ => this.initial = false);
+        this._startGameSubscription = this._eventAggregator.subscribeOnce('startGame', _ => {
+            this.initial = false;
+            this.paused = false;
+        });
+        this._pauseGameSubscription = this._eventAggregator.subscribeOnce('pause', _ => this.paused = !this.paused);
         this._eventAggregator.publish('languageChanged', this.selectedLanguage.id);
     }
 
     startGame() {
         this._eventAggregator.publish('startGame');
+    }
+
+    pauseGame() {
+        !this.initial && this._eventAggregator.publish('pause');
     }
 
     selectedLanguageChanged(newValue) {

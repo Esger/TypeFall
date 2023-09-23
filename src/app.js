@@ -23,6 +23,6 @@ export class App {
     }
 
     _togglePause(value) {
-        this.pause = value === false ? false : !this.pause;
+        this.pause = value !== undefined ? value : !this.pause;
     }
 }
