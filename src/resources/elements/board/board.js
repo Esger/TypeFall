@@ -3,6 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 
 @inject(EventAggregator)
 export class BoardCustomElement {
+    @bindable gameState
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
@@ -11,8 +12,6 @@ export class BoardCustomElement {
         this._maxBlocks = 100;
         this._typedCount = 0;
         this.maxPiles = 19;
-        this._paused = true;
-        this._gameOver = false;
         this.random = false;
         this._texts = {
             'nl': 'In de schemering van de tijd, waar dromen en werkelijkheid elkaar ontmoeten als oude vrienden, strekte het duistere mysterie van de nacht zich uit over de stad. Een stad diep doordrenkt met geheimen, verborgen achter de facade van schijnbare normaliteit. Hier begint ons verhaal, waarvan de hoofdrolspeler zijn weg baant door het doolhof van zijn eigen ziel, terwijl de schaduwen fluisteren en de maan haar bleke licht werpt op de verborgen waarheden die zich in de donkerste hoeken verschuilen. Dit is een verhaal van betovering en bedrog, van onverwachte ontmoetingen en vergeten herinneringen, een verhaal dat zich afspeelt in een wereld waar de grens tussen wat echt is en wat slechts een droom lijkt te vervagen, zoals de zachte afdruk van een verloren kus op de rand van de nacht.',
@@ -25,8 +24,8 @@ export class BoardCustomElement {
     attached() {
         this._startStopSubscription = this._eventAggregator.subscribe('startGame', _ => this._startGame());
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
-        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => !this._paused && this._checkTyped(key));
-        this._pauseSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
+        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => !this.gameState.paused && this._checkTyped(key));
+        this._pauseSubscription = this._eventAggregator.subscribe('pause', _ => !this.gameState.initial && this._togglePause());
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
         this._gameOverSubscription = this._eventAggregator.subscribe('gameOver', _ => this._endGame());
         this._languageToggleSubscription = this._eventAggregator.subscribe('languageChanged', value => {
@@ -64,7 +63,7 @@ export class BoardCustomElement {
     }
 
     _nextLetter() {
-        if (this.blocks.length > this._maxBlocks) return;
+        if (this.blocks?.length > this._maxBlocks) return;
         let letter;
         if (this.random) {
             letter = this._letters[Math.floor(Math.random() * this._letters.length)];
@@ -112,28 +111,30 @@ export class BoardCustomElement {
         this.pileHeights = [...new Array(this.maxPiles)].map(_ => 0);
         $('.pile').children().remove();
         this._addInterval = this._initialInterval;
-        this._paused && this._resumeGame();
+        this.gameState.gameOver = false;
+        this._resumeGame();
     }
 
     _resumeGame() {
-        if (this._gameOver) return;
+        if (this.gameState.gameOver) return;
         clearInterval(this._letterAdderInterval);
         this._letterAdderInterval = setInterval(_ => this._nextLetter(), this._addInterval);
-        this._paused = false;
+        this.gameState.paused = false;
     }
 
     _pauseGame() {
         clearInterval(this._letterAdderInterval);
         this._letterAdderInterval = undefined;
-        this._paused = true;
+        this.gameState.paused = true;
     }
 
     _togglePause() {
-        this._paused ? this._resumeGame() : this._pauseGame();
+        if (this.gameState.initial) return;
+        this.gameState.paused ? this._resumeGame() : this._pauseGame();
     }
 
     _endGame() {
-        this._gameOver = true;
+        this.gameState.gameOver = true;
         this._pauseGame();
     }
 

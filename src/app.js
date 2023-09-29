@@ -10,19 +10,25 @@ export class App {
         this.title = 'TypeFall';
         this._eventAggregator = eventAggregator;
         this._keyInputService = keyInputService;
-        this.pause = false;
+        this.gameState = {
+            pause: true,
+            initial: true
+        }
     }
 
     attached() {
-        this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
-        this._startSubscription = this._eventAggregator.subscribe('startGame', _ => this._togglePause(false));
+        this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => {
+            if (this.gameState.initial) return;
+            this.gameState.pause = !this.gameState.pause;
+        });
+        this._startSubscription = this._eventAggregator.subscribe('startGame', _ => {
+            this.gameState.pause = false;
+            this.gameState.initial = false;
+        });
     }
 
     detached() {
         this._startStopSubscription.dispose();
-    }
-
-    _togglePause(value) {
-        this.pause = value !== undefined ? value : !this.pause;
+        this._startSubscription.dispose();
     }
 }
