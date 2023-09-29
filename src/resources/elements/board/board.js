@@ -8,7 +8,7 @@ export class BoardCustomElement {
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
         this._letters = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-        this._initialInterval = 200; //1000;
+        this._initialInterval = 1000; //1000;
         this._maxBlocks = 100;
         this._typedCount = 0;
         this.maxPiles = 19;
@@ -87,6 +87,7 @@ export class BoardCustomElement {
     }
 
     _checkTyped(key) {
+        if (!this.blocks) return;
         const index = this.blocks.findIndex(block => block.is(key) && !block.missed && !block.typed);
         if (index !== -1) {
             const block = this.blocks[index];
