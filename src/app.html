@@ -6,7 +6,7 @@
     <require from="elements/score/score"></require>
 
     <div if.bind="initial || !paused"
-         class="title ${paused ? 'title--hidden' : 'title--visible'}">
+         class="title">
         <h1>${title}</h1>
     </div>
     <board class="${paused ? 'board--dimmed' : ''}"
