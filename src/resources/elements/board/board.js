@@ -3,7 +3,9 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 
 @inject(EventAggregator)
 export class BoardCustomElement {
-    @bindable gameState
+    @bindable paused
+    @bindable gameOver
+    @bindable initial
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
@@ -24,20 +26,13 @@ export class BoardCustomElement {
     attached() {
         this._startStopSubscription = this._eventAggregator.subscribe('startGame', _ => this._startGame());
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
-        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => !this.gameState.paused && this._checkTyped(key));
-        this._pauseSubscription = this._eventAggregator.subscribe('pause', _ => !this.gameState.initial && this._togglePause());
+        this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
+        this._pauseSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
         this._gameOverSubscription = this._eventAggregator.subscribe('gameOver', _ => this._endGame());
         this._languageToggleSubscription = this._eventAggregator.subscribe('languageChanged', value => {
             this.random = value == 'random';
             this._text = this._texts[value];
-        });
-        $(window).on('resize', _ => {
-            clearTimeout(this._restartTimeout);
-            this._restartTimeout = setTimeout(_ => {
-                this._pauseGame();
-                this._startGame();
-            }, 50);
         });
     }
 
@@ -63,7 +58,7 @@ export class BoardCustomElement {
     }
 
     _nextLetter() {
-        if (this.blocks?.length > this._maxBlocks) return;
+        if (this.paused || this.blocks?.length > this._maxBlocks) return;
         let letter;
         if (this.random) {
             letter = this._letters[Math.floor(Math.random() * this._letters.length)];
@@ -87,7 +82,7 @@ export class BoardCustomElement {
     }
 
     _checkTyped(key) {
-        if (!this.blocks) return;
+        if (!this.blocks || this.paused) return;
         const index = this.blocks.findIndex(block => block.is(key) && !block.missed && !block.typed);
         if (index !== -1) {
             const block = this.blocks[index];
@@ -112,30 +107,28 @@ export class BoardCustomElement {
         this.pileHeights = [...new Array(this.maxPiles)].map(_ => 0);
         $('.pile').children().remove();
         this._addInterval = this._initialInterval;
-        this.gameState.gameOver = false;
+        this.gameOver = false;
         this._resumeGame();
     }
 
     _resumeGame() {
-        if (this.gameState.gameOver) return;
+        if (this.gameOver) return;
         clearInterval(this._letterAdderInterval);
         this._letterAdderInterval = setInterval(_ => this._nextLetter(), this._addInterval);
-        this.gameState.paused = false;
     }
 
     _pauseGame() {
         clearInterval(this._letterAdderInterval);
         this._letterAdderInterval = undefined;
-        this.gameState.paused = true;
     }
 
     _togglePause() {
-        if (this.gameState.initial) return;
-        this.gameState.paused ? this._resumeGame() : this._pauseGame();
+        if (this.initial) return;
+        this.paused ? this._resumeGame() : this._pauseGame();
     }
 
     _endGame() {
-        this.gameState.gameOver = true;
+        this.gameOver = true;
         this._pauseGame();
     }
 

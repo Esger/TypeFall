@@ -1,10 +1,10 @@
-<template class="${gameState.initial ? 'initial' : 'started'}">
+<template class="${initial ? 'initial' : 'started'}">
     <require from="./settings.css"></require>
 
-    <h2>${gameState.initial ? 'settings' : 'TypeFall'}</h2>
+    <h2>${initial ? 'settings' : 'TypeFall'}</h2>
 
-    <button click.delegate="startGame()">${gameState.initial ? 'Start (enter)' : 'Restart (enter)'}</button>
-    <button if.bind="!gameState.initial" click.delegate="pauseGame()">${gameState.paused ? 'Resume (escape)' : 'Pause (escape)'}</button>
+    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
+    <button if.bind="!initial" click.delegate="pauseGame()">${paused ? 'Resume (escape)' : 'Pause (escape)'}</button>
 
     <fieldset>
         <label repeat.for="lang of languages">
@@ -16,7 +16,7 @@
         </label>
     </fieldset>
 
-    <p if.bind="gameState.initial"
+    <p if.bind="initial"
        class="hint">Press 'esc' to pause</p>
 
     <p><a href="/"><small>&copy ashware</small></a></p>

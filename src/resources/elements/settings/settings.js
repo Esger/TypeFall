@@ -4,7 +4,7 @@ import { SettingsService } from 'services/settings-service';
 
 @inject(EventAggregator, SettingsService)
 export class SettingsCustomElement {
-    @bindable gameState
+    @bindable initial
     @observable selectedLanguage;
 
     constructor(eventAggregator, settingsService) {
@@ -33,7 +33,7 @@ export class SettingsCustomElement {
     }
 
     pauseGame() {
-        !this.gameState.initial && this._eventAggregator.publish('pause');
+        !this.initial && this._eventAggregator.publish('pause');
     }
 
     selectedLanguageChanged(newValue) {
