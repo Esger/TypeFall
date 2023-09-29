@@ -29,7 +29,6 @@ export class BoardCustomElement {
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._pauseSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
-        this._gameOverSubscription = this._eventAggregator.subscribe('gameOver', _ => this._endGame());
         this._languageToggleSubscription = this._eventAggregator.subscribe('languageChanged', value => {
             this.random = value == 'random';
             this._text = this._texts[value];
@@ -39,12 +38,10 @@ export class BoardCustomElement {
     detached() {
         clearInterval(this._letterAdderInterval);
         this._startStopSubscription.dispose();
-        this._pauseSubscription.dispose();
         this._letterRemoveInterval.dispose();
         this._keyboardSubscription.dispose();
-        this._startStopSubscription.dispose();
+        this._pauseSubscription.dispose();
         this._languageToggleSubscription.dispose();
-        this._gameOverSubscription.dispose();
     }
 
     _adjustGameSpeed(score) {
@@ -107,7 +104,6 @@ export class BoardCustomElement {
         this.pileHeights = [...new Array(this.maxPiles)].map(_ => 0);
         $('.pile').children().remove();
         this._addInterval = this._initialInterval;
-        this.gameOver = false;
         this._resumeGame();
     }
 
@@ -123,7 +119,7 @@ export class BoardCustomElement {
     }
 
     _togglePause() {
-        if (this.initial) return;
+        if (this.initial || this.gameOver) return;
         this.paused ? this._resumeGame() : this._pauseGame();
     }
 

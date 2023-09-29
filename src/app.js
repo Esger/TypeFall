@@ -12,16 +12,22 @@ export class App {
         this._keyInputService = keyInputService;
         this.paused = false;
         this.initial = true;
+        this.gameOver = false;
     }
 
     attached() {
         this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => {
-            if (this.initial) return;
+            if (this.initial || this.gameOver) return;
             this.paused = !this.paused;
         });
         this._startSubscription = this._eventAggregator.subscribe('startGame', _ => {
             this.paused = false;
             this.initial = false;
+            this.gameOver = false;
+        });
+        this._gameOverSubscription = this._eventAggregator.subscribe('gameOver', _ => {
+            this.gameOver = true;
+            this.paused = true;
         });
         $(window).on('resize', _ => {
             clearTimeout(this._restartTimeout);
@@ -36,5 +42,6 @@ export class App {
     detached() {
         this._startStopSubscription.dispose();
         this._startSubscription.dispose();
+        $(window).off('resize');
     }
 }

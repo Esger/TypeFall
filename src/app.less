@@ -10,7 +10,7 @@ body {
 .blocks,
 .piles,
 .title,
-.pause {
+.message {
     position       : absolute;
     inset          : 0;
     display        : flex;
@@ -28,10 +28,11 @@ board {
 }
 
 .title,
-.pause {
-    perspective: 1000px;
-    opacity    : 1;
-    transition : opacity 200ms ease;
+.message {
+    perspective   : 1000px;
+    opacity       : 1;
+    transition    : opacity 200ms ease;
+    pointer-events: none;
 
     h1,
     h2 {
@@ -48,14 +49,7 @@ board {
     }
 }
 
-.title.title--hidden,
-.pause.pause--hidden {
-    opacity: 0;
-}
-
-.pause {
-    pointer-events: none;
-
+.message {
     h2 {
         opacity: 1;
     }
