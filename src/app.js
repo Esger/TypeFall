@@ -7,7 +7,6 @@ import $ from 'jquery';
 export class App {
 
     constructor(eventAggregator, keyInputService) {
-        this.title = 'TypeFall';
         this._eventAggregator = eventAggregator;
         this._keyInputService = keyInputService;
         this.paused = false;

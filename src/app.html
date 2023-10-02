@@ -4,24 +4,18 @@
     <require from="elements/board/board"></require>
     <require from="elements/settings/settings"></require>
     <require from="elements/score/score"></require>
+    <require from="elements/status/status"></require>
 
-    <div if.bind="initial || !paused"
-         class="title">
-        <h1>${title}</h1>
-    </div>
-    <board class="${paused ? 'board--dimmed' : ''}"
-           paused.bind="paused"
-           initial.bind="initial"
-           game-over.bind="gameOver"></board>
-    <score></score>
-    <settings initial.bind="initial"></settings>
-    <div if.bind="paused && !initial && !gameOver"
-         class="message pause">
-        <h2>paused</h2>
-    </div>
-    <div if.bind="gameOver"
-         class="message gameOver">
-        <h2>game over</h2>
-    </div>
+    <status paused.bind="paused"
+            initial.bind="initial"
+            game-over.bind="gameOver"
+            containerless>
+        <board class="${paused ? 'board--dimmed' : ''}"
+               paused.bind="paused"
+               initial.bind="initial"
+               game-over.bind="gameOver"></board>
+        <score></score>
+        <settings initial.bind="initial"></settings>
+    </status>
 
 </template>

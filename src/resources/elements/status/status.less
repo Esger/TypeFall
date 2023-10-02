@@ -1,0 +1,69 @@
+.title,
+.message {
+    perspective   : 1000px;
+    transition    : all 500ms ease;
+    pointer-events: none;
+    opacity       : 1;
+
+    &.title--dimmed {
+        opacity: .5;
+    }
+
+    &.title--paused {
+        opacity: 0;
+    }
+
+    h1,
+    h2 {
+        font-family     : 'Bungee Outline', cursive;
+        font-weight     : 500;
+        color           : green;
+        font-size       : clamp(36px, calc(2.25rem + ((1vmin - 6px) * 6)), 72px);
+        min-height      : 0vw;
+        position        : absolute;
+        text-align      : center;
+        transform-origin: center bottom;
+        width           : 100%;
+    }
+}
+
+.title h1 {
+    transform: rotateX(40deg) translateY(70vh);
+}
+
+.message--out {
+    transform: rotateX(0deg) translate3d(0vh, 70vh, 40vh) scale(.5);
+    opacity  : 0;
+}
+
+.message--in {
+    transform: rotateX(40deg) translate3d(0vh, 70vh, 0) scale(1);
+    opacity  : 1;
+}
+
+.animate-in {
+    transition: all 500ms ease-out;
+    .message--in;
+
+    &.au-enter {
+        .message--out;
+    }
+
+    &.au-enter-active {
+        .message--in;
+    }
+
+}
+
+.animate-out {
+    transition: all 500ms ease-out;
+    .message--in;
+
+    &.au-leave {
+        .message--in;
+    }
+
+    &.au-leave-active {
+        .message--out;
+    }
+}
