@@ -9,9 +9,6 @@
         opacity: .5;
     }
 
-    &.title--paused {
-        opacity: 0;
-    }
 
     h1,
     h2 {
@@ -24,15 +21,15 @@
         text-align      : center;
         transform-origin: center bottom;
         width           : 100%;
+
+        &.gameOver {
+            color: crimson;
+        }
     }
 }
 
-.title h1 {
-    transform: rotateX(40deg) translateY(70vh);
-}
-
 .message--out {
-    transform: rotateX(0deg) translate3d(0vh, 70vh, 40vh) scale(.5);
+    transform: rotateX(0deg) translate3d(0vh, -10vh, 40vh) scale(.5);
     opacity  : 0;
 }
 
@@ -41,29 +38,45 @@
     opacity  : 1;
 }
 
+.message--down {
+    transform: rotateX(40deg) translate3d(0vh, 90vh, 0) scale(1);
+    opacity  : 0;
+}
+
 .animate-in {
-    transition: all 500ms ease-out;
     .message--in;
 
-    &.au-enter {
-        .message--out;
-    }
-
     &.au-enter-active {
-        .message--in;
+        animation   : tumble-in 500ms ease-out forwards;
+        // outline  : 10px solid red;
     }
-
 }
 
 .animate-out {
     transition: all 500ms ease-out;
-    .message--in;
 
-    &.au-leave {
+    &.au-leave-active {
+        animation: fall-down 500ms ease-out forwards;
+        .message--out;
+    }
+}
+
+@keyframes tumble-in {
+    from {
+        .message--out;
+    }
+
+    to {
+        .message--in;
+    }
+}
+
+@keyframes fall-down {
+    from {
         .message--in;
     }
 
-    &.au-leave-active {
-        .message--out;
+    to {
+        .message--down;
     }
 }

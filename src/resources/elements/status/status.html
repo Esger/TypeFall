@@ -1,8 +1,9 @@
 <template>
     <require from="./status.css"></require>
 
-    <div class="title ${initial ? '' : 'title--dimmed'} ${paused ? 'title--paused' : ''}">
-        <h1>${title}</h1>
+    <div class="title ${initial ? '' : 'title--dimmed'}">
+        <h1 if.bind="!paused && !gameOver"
+            class="au-animate animate-in animate-out">${title}</h1>
     </div>
 
     <slot></slot>
@@ -12,9 +13,9 @@
             class="au-animate animate-in animate-out">paused</h2>
     </div>
 
-    <div if.bind="gameOver"
-         class="message gameOver">
-        <h2>game over</h2>
+    <div class="message">
+        <h2 if.bind="gameOver"
+            class="gameOver au-animate animate-in animate-out">game over</h2>
     </div>
 
 </template>
