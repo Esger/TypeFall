@@ -1,0 +1,82 @@
+.title,
+.message {
+    perspective   : 1000px;
+    transition    : all 500ms ease;
+    pointer-events: none;
+    opacity       : 1;
+
+    &.title--dimmed {
+        opacity: .5;
+    }
+
+
+    h1,
+    h2 {
+        font-family     : 'Bungee Outline', cursive;
+        font-weight     : 500;
+        color           : green;
+        font-size       : clamp(36px, calc(2.25rem + ((1vmin - 6px) * 6)), 72px);
+        min-height      : 0vw;
+        position        : absolute;
+        text-align      : center;
+        transform-origin: center bottom;
+        width           : 100%;
+
+        &.gameOver {
+            color: crimson;
+        }
+    }
+}
+
+.message--out {
+    transform: rotateX(0deg) translate3d(0vh, -10vh, 40vh) scale(.5);
+    opacity  : 0;
+}
+
+.message--in {
+    transform: rotateX(40deg) translate3d(0vh, 70vh, 0) scale(1);
+    opacity  : 1;
+}
+
+.message--down {
+    transform: rotateX(40deg) translate3d(0vh, 90vh, 0) scale(1);
+    opacity  : 0;
+}
+
+.animate-in {
+    .message--in;
+
+    &.au-enter-active {
+        animation   : tumble-in 500ms ease-out forwards;
+        // outline  : 10px solid red;
+    }
+}
+
+.animate-out {
+    transition: all 500ms ease-out;
+
+    &.au-leave-active {
+        animation: fall-down 500ms ease-out forwards;
+        .message--out;
+    }
+}
+
+@keyframes tumble-in {
+    from {
+        .message--out;
+    }
+
+    to {
+        .message--in;
+    }
+}
+
+@keyframes fall-down {
+    from {
+        .message--in;
+    }
+
+    to {
+        .message--down;
+    }
+}

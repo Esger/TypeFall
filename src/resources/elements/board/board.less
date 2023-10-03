@@ -7,6 +7,12 @@ board {
     height       : var(--boardHeight);
     max-width    : 100vmin;
     margin       : 0 auto;
+    opacity      : 1;
+    transition   : opacity 200ms ease;
+
+    &.board--dimmed {
+        opacity: .3;
+    }
 }
 
 .pile {

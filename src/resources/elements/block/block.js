@@ -39,12 +39,20 @@ export class BlockCustomElement {
             this._$element.children('div').appendTo(targetPile);
             this._eventAggregator.publish('score', -1);
             this._eventAggregator.publish('remove', this.block.id);
+            this._checkFullPile(targetPile);
         });
 
         this._$element.find('div').one('animationend', _ => {
             this._eventAggregator.publish('score', this._score);
             this._eventAggregator.publish('remove', this.block.id);
         });
+    }
+
+    _checkFullPile(pile) {
+        const blocksInPile = $(pile).children().length;
+        const allowedBlocksInPile = Math.floor(pile.clientHeight / this.size) - 2;
+        const gameOver = blocksInPile > allowedBlocksInPile
+        gameOver && this._eventAggregator.publish('gameOver');
     }
 
 }
