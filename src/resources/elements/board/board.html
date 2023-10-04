@@ -10,7 +10,8 @@
     <div class="blocks">
         <block repeat.for="block of blocks"
                block.bind="block"
-               piles.bind="pileHeights"></block>
+               piles.bind="pileHeights"
+               is-next-block.bind="$first"></block>
     </div>
 
 </template>
