@@ -7,6 +7,7 @@ export class KeyInputService {
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
         document.addEventListener('keydown', event => {
+            if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return; // Niet reageren op command-, ctrl- en shift-key
             event.preventDefault(); // spatie moet laatst geklikte button niet triggeren.
             this.handleKeyInput(event);
         }, { passive: false });

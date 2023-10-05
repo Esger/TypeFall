@@ -7,7 +7,7 @@
 
     @keyframes fallOut {
         to {
-            translate: 0 100vh;
+            translate: 0 100vh 0;
         }
     }
 }
@@ -40,11 +40,12 @@ block {
 
         @keyframes fallDown {
             to {
-                translate: 0 var(--pileTop);
+                translate: 0 var(--pileTop) 0;
             }
         }
     }
 }
+
 
 .block {
     font-family     : 'Bungee Hairline', cursive;
@@ -57,7 +58,16 @@ block {
     width           : 100%;
     border-radius   : 4px;
     border          : 2px solid green;
-    color           : green;
     aspect-ratio    : 1;
+    user-select     : none;
     background-color: black;
+    color           : green;
+}
+
+block.accentColor {
+
+    .block:not(.au-leave-active),
+    &:has(.au-leave-active)+block.au-enter-active .block {
+        color: lighten(green, 15%);
+    }
 }

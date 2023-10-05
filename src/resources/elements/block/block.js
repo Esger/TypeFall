@@ -5,6 +5,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 export class BlockCustomElement {
     @bindable block;
     @bindable piles;
+    @bindable isNextBlock;
 
     constructor(element, eventAggregator) {
         this._element = element;
@@ -43,7 +44,7 @@ export class BlockCustomElement {
         });
 
         this._$element.find('div').one('animationend', _ => {
-            this._eventAggregator.publish('score', this._score);
+            this._eventAggregator.publish('score', this.isNextBlock ? 2 * this._score : this._score);
             this._eventAggregator.publish('remove', this.block.id);
         });
     }
