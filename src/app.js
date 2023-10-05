@@ -35,12 +35,14 @@ export class App {
                 this._eventAggregator.publish('pause');
                 this._eventAggregator.publish('startGame');
             }, 50);
-        }).on('click', _ => this.initial ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
+        })
+        $('.blocks').on('click', _ => this.initial ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
     }
 
     detached() {
         this._startStopSubscription.dispose();
         this._startSubscription.dispose();
-        $(window).off('resize click');
+        $(window).off('resize');
+        $$('.blocks').off('click');
     }
 }
