@@ -2,7 +2,7 @@
     <require from="./status.css"></require>
 
     <div class="title ${initial ? '' : 'title--dimmed'}">
-        <h1 if.bind="!paused && !gameOver"
+        <h1 if.bind="!paused && !gameOver && !isMobile"
             class="au-animate animate-in animate-out">${title}</h1>
     </div>
 
@@ -16,6 +16,11 @@
     <div class="message">
         <h2 if.bind="gameOver"
             class="gameOver au-animate animate-in animate-out">game over</h2>
+    </div>
+
+    <div class="message">
+        <h2 if.bind="isMobile"
+            class="gameOver au-animate animate-in animate-out">no keyboard</h2>
     </div>
 
 </template>

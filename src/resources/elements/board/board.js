@@ -38,8 +38,8 @@ export class BoardCustomElement {
     detached() {
         clearInterval(this._letterAdderInterval);
         this._startStopSubscription.dispose();
-        this._letterRemoveInterval.dispose();
-        this._keyboardSubscription.dispose();
+        this._letterRemoveInterval?.dispose();
+        this._keyboardSubscription?.dispose();
         this._pauseSubscription.dispose();
         this._languageToggleSubscription.dispose();
     }

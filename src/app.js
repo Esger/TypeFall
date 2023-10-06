@@ -12,6 +12,7 @@ export class App {
         this.paused = false;
         this.initial = true;
         this.gameOver = false;
+        this.isMobile = false;
     }
 
     attached() {
@@ -35,12 +36,16 @@ export class App {
                 this._eventAggregator.publish('pause');
                 this._eventAggregator.publish('startGame');
             }, 50);
-        }).on('click', _ => this.initial ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
+        }).on('touchstart', _ => {
+            this.isMobile = true;
+        });
+        $('.blocks').on('click', _ => this.initial ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
     }
 
     detached() {
         this._startStopSubscription.dispose();
         this._startSubscription.dispose();
-        $(window).off('resize click');
+        $(window).off('resize');
+        $$('.blocks').off('click');
     }
 }
