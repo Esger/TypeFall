@@ -24,7 +24,7 @@ export class BoardCustomElement {
     }
 
     attached() {
-        this._startStopSubscription = this._eventAggregator.subscribe('startGame', _ => this._startGame());
+        this._startStopSubscription = this._eventAggregator.subscribe('startGame', _ => setTimeout(_ => this._startGame()));
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._pauseSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
