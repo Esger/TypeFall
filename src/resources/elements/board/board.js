@@ -15,10 +15,18 @@ export class BoardCustomElement {
         this._typedCount = 0;
         this.maxPiles = 19;
         this.random = false;
+        this._levels = ['level1', 'level2', 'level3', 'level4', 'level5', 'level6'];
+        this._level = this._levels[0];
         this._texts = {
-            'nl': 'In de schemering van de tijd, waar dromen en werkelijkheid elkaar ontmoeten als oude vrienden, strekte het duistere mysterie van de nacht zich uit over de stad. Een stad diep doordrenkt met geheimen, verborgen achter de facade van schijnbare normaliteit. Hier begint ons verhaal, waarvan de hoofdrolspeler zijn weg baant door het doolhof van zijn eigen ziel, terwijl de schaduwen fluisteren en de maan haar bleke licht werpt op de verborgen waarheden die zich in de donkerste hoeken verschuilen. Dit is een verhaal van betovering en bedrog, van onverwachte ontmoetingen en vergeten herinneringen, een verhaal dat zich afspeelt in een wereld waar de grens tussen wat echt is en wat slechts een droom lijkt te vervagen, zoals de zachte afdruk van een verloren kus op de rand van de nacht.',
-            'en': 'In the twilight of time, where dreams and reality intertwine like old friends, the enigmatic shroud of night stretched across the city. A city steeped in secrets, concealed beneath the veneer of apparent normalcy. Here, our tale commences, with its protagonist navigating the labyrinth of his own soul, as shadows whisper and the moon casts its pale light upon the hidden truths lurking in the darkest corners. This is a narrative of enchantment and deception, of chance encounters and forgotten memories, a tale set in a realm where the boundary between what is real and what appears to be but a dream blurs, much like the gentle imprint of a lost kiss on the edge of night.',
-            'random': 'random'
+            level1: {
+                'nl': 'Als dak af daf jak laks saf sjaak klad dal flak afas sa das klaf dasklaf jakaf dakaf as sja daf ska la daf slak laks klaas da alf fa sa jas afdas fad daskla laska fjaskl als dals jas flas laf jaklas slas fjasa fadlas dakafslas laksfa sjal as skas dalska slaf afj daja asla ad afslas daf lask sask sajda alfda aflas sklad dakas slaj ajla alfask asak flaj klasd dask sadak ska sjad jaklasd adfa sjak salda fadak asa alaf afjla skald aflsa klafsa saskla fja dafas ajlad alfa afda dala safad afa daf asd sfa jasla fadlasa skad sl af sja asda.',
+                'en': 'sad ask lad flask fad alfalfa salad lads fads alfa add slad jafas ads fald jak safal salfas skad dal slas saf lass alfa afla safja sladja al jafad sadad afad alfad daj jafal saad sklad skald fadaf sladask fajad lask flak faa jakla sada jasla skaf alfaad jafads safada asja aksad faf jakala jad aflad fja jakad slada jas askala aj fasa sal dask ladj jakald safja dalska daf skald ladsa jakadl faj fadals slaf laka jadka ala adsl fjala fask fajka slak asaj dalf jaak salf lja fasa faal jakas'
+            },
+            level2: {
+                'nl': 'In de schemering van de tijd, waar dromen en werkelijkheid elkaar ontmoeten als oude vrienden, strekte het duistere mysterie van de nacht zich uit over de stad. Een stad diep doordrenkt met geheimen, verborgen achter de facade van schijnbare normaliteit. Hier begint ons verhaal, waarvan de hoofdrolspeler zijn weg baant door het doolhof van zijn eigen ziel, terwijl de schaduwen fluisteren en de maan haar bleke licht werpt op de verborgen waarheden die zich in de donkerste hoeken verschuilen. Dit is een verhaal van betovering en bedrog, van onverwachte ontmoetingen en vergeten herinneringen, een verhaal dat zich afspeelt in een wereld waar de grens tussen wat echt is en wat slechts een droom lijkt te vervagen, zoals de zachte afdruk van een verloren kus op de rand van de nacht.',
+                'en': 'In the twilight of time, where dreams and reality intertwine like old friends, the enigmatic shroud of night stretched across the city. A city steeped in secrets, concealed beneath the veneer of apparent normalcy. Here, our tale commences, with its protagonist navigating the labyrinth of his own soul, as shadows whisper and the moon casts its pale light upon the hidden truths lurking in the darkest corners. This is a narrative of enchantment and deception, of chance encounters and forgotten memories, a tale set in a realm where the boundary between what is real and what appears to be but a dream blurs, much like the gentle imprint of a lost kiss on the edge of night.',
+                'random': 'random'
+            }
         };
         this.nextCharIndex = 0;
     }
@@ -32,7 +40,7 @@ export class BoardCustomElement {
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
         this._languageToggleSubscription = this._eventAggregator.subscribe('languageChanged', value => {
             this.random = value == 'random';
-            this._text = this._texts[value];
+            this._text = this._texts[this._level][value];
         });
     }
 
