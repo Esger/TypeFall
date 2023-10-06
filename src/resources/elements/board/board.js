@@ -28,6 +28,7 @@ export class BoardCustomElement {
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._pauseSubscription = this._eventAggregator.subscribe('pause', _ => this._togglePause());
+        this._gameOverSubscription = this._eventAggregator.subscribe('gameOver', _ => this._dropAllBlocks());
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
         this._languageToggleSubscription = this._eventAggregator.subscribe('languageChanged', value => {
             this.random = value == 'random';
@@ -90,6 +91,15 @@ export class BoardCustomElement {
             this._eventAggregator.publish('score', -blocks.length);
             blocks.forEach(block => block.style.setProperty('--animationDuration', '1s'));
         }
+    }
+
+    _dropAllBlocks() {
+        const $blocks = $('.piles .block');
+        $.each($blocks, function () {
+            setTimeout(_ => {
+                $(this).addClass('au-leave-active').one('animationend', _ => $(this).remove());
+            }, Math.random() * 1000);
+        });
     }
 
     _removeLetter(id) {
