@@ -39,7 +39,7 @@ export class App {
         }).on('touchstart', _ => {
             this.isMobile = true;
         });
-        $('.blocks').on('click', _ => this.initial ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
+        $('.blocks').on('click', _ => this.initial || this.gameOver ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
     }
 
     detached() {
