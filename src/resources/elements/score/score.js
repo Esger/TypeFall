@@ -12,19 +12,29 @@ export class ScoreCustomElement {
         this.randomMode = false;
         this._eventAggregator = eventAggregator;
         this._settingsService = settingsService;
+        this._wordComplete = true;
     }
 
     attached() {
         this.highScore = this._settingsService.getSettings('highScore') || 0;
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => {
             if (this.gameOver) return;
+            if (score == 1) this._wordComplete = false;
+
             if (score < 0) {
                 this.negative = true;
                 setTimeout(_ => {
                     this.negative = false;
                 }, 400);
             }
-            this.score += score;
+
+            if (score == 5) {
+                this.score = this._wordComplete ? this.score + score : this.score;
+                this._wordComplete = true;
+            } else {
+                this.score += score;
+            }
+
             this._checkHighScore();
         });
         this._startGameSubscription = this._eventAggregator.subscribe('startGame', _ => { this.score = 0 });
