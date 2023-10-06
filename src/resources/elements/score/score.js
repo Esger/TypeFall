@@ -1,9 +1,10 @@
-import { inject } from 'aurelia-framework';
+import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { SettingsService } from 'services/settings-service';
 
 @inject(EventAggregator, SettingsService)
 export class ScoreCustomElement {
+    @bindable gameOver
 
     constructor(eventAggregator, settingsService) {
         this.score = 0;
@@ -16,6 +17,7 @@ export class ScoreCustomElement {
     attached() {
         this.highScore = this._settingsService.getSettings('highScore') || 0;
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => {
+            if (this.gameOver) return;
             if (score < 0) {
                 this.negative = true;
                 setTimeout(_ => {
