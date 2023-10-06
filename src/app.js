@@ -12,6 +12,7 @@ export class App {
         this.paused = false;
         this.initial = true;
         this.gameOver = false;
+        this.isMobile = false;
     }
 
     attached() {
@@ -35,7 +36,9 @@ export class App {
                 this._eventAggregator.publish('pause');
                 this._eventAggregator.publish('startGame');
             }, 50);
-        })
+        }).on('touchstart', _ => {
+            this.isMobile = true;
+        });
         $('.blocks').on('click', _ => this.initial ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
     }
 

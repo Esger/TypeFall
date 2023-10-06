@@ -9,13 +9,16 @@
     <status paused.bind="paused"
             initial.bind="initial"
             game-over.bind="gameOver"
+            is-mobile.bind="isMobile"
             containerless>
-        <board class="${paused ? 'board--dimmed' : ''}"
+        <board if.bind="!isMobile"
+               class="${paused ? 'board--dimmed' : ''}"
                paused.bind="paused"
                initial.bind="initial"
                game-over.bind="gameOver"></board>
-        <score></score>
-        <settings initial.bind="initial"></settings>
+        <score if.bind="!isMobile"></score>
+        <settings if.bind="!isMobile"
+                  initial.bind="initial"></settings>
     </status>
 
 </template>
