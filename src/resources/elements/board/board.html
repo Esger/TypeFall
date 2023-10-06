@@ -8,10 +8,13 @@
     </div>
 
     <div class="blocks">
-        <block repeat.for="block of blocks"
-               block.bind="block"
-               piles.bind="pileHeights"
-               is-next-block.bind="$first"></block>
+        <template if.bind="!gameOver"
+                  containerless>
+            <block repeat.for="block of blocks"
+                   block.bind="block"
+                   piles.bind="pileHeights"
+                   is-next-block.bind="$first"></block>
+        </template>
     </div>
 
 </template>
