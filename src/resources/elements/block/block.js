@@ -11,12 +11,14 @@ export class BlockCustomElement {
         this._element = element;
         this._eventAggregator = eventAggregator;
         this.missed = false;
+        this._wordScore = 5;
+        this._letterScore = 1;
     }
 
     attached() {
         this._$element = $(this._element);
         this._initLetter();
-        this._score = this.block.letter == ' ' ? 5 : 1;
+        this._score = this.block.letter == ' ' ? this._wordScore : this._letterScore;
     }
 
     _initLetter() {
@@ -44,7 +46,7 @@ export class BlockCustomElement {
         });
 
         this._$element.find('div').one('animationend', _ => {
-            this._eventAggregator.publish('score', this.isNextBlock ? 2 * this._score : this._score);
+            this._eventAggregator.publish('score', this.isNextBlock ? Math.min(2 * this._score, this._wordScore) : this._score);
             this._eventAggregator.publish('remove', this.block.id);
         });
     }
