@@ -16,7 +16,8 @@
                paused.bind="paused"
                initial.bind="initial"
                game-over.bind="gameOver"></board>
-        <score if.bind="!isMobile"></score>
+        <score if.bind="!isMobile"
+               game-over.bind="gameOver"></score>
         <settings if.bind="!isMobile"
                   initial.bind="initial"></settings>
     </status>

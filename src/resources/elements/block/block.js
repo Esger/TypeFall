@@ -52,7 +52,7 @@ export class BlockCustomElement {
     _checkFullPile(pile) {
         const blocksInPile = $(pile).children().length;
         const allowedBlocksInPile = Math.floor(pile.clientHeight / this.size) - 2;
-        const gameOver = blocksInPile > allowedBlocksInPile
+        const gameOver = blocksInPile > allowedBlocksInPile;
         gameOver && this._eventAggregator.publish('gameOver');
     }
 

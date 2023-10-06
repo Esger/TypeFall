@@ -8,5 +8,4 @@ export class StatusCustomElement {
     constructor() {
         this.title = 'TypeFall';
     }
-
 }
