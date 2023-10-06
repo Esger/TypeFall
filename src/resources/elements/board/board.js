@@ -63,7 +63,8 @@ export class BoardCustomElement {
         } else {
             const nextChar = this._text.charAt(this.nextCharIndex).toLocaleLowerCase();
             letter = this._letters.includes(nextChar) ? nextChar : undefined;
-            this.nextCharIndex = Math.round(this.nextCharIndex + 1, this._text.length);
+            this.nextCharIndex = Math.round(this.nextCharIndex + 1);
+            this.nextCharIndex = this.nextCharIndex > this._text.length ? 0 : this.nextCharIndex;
             if (!letter) return;
         }
         const nextBlock = {
