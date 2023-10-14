@@ -1,5 +1,5 @@
 settings {
-    --background    : fade(lightgreen, 10%);
+    --background    : fade(green, 15%);
     position        : absolute;
     top             : -1px;
     left            : -1px;
@@ -42,8 +42,7 @@ settings {
         font-weight: normal;
     }
 
-    h2,
-    label {
+    h2 {
         font-size: 1.5rem;
         color    : green;
     }
@@ -67,48 +66,23 @@ settings {
         opacity: 0;
     }
 
-    label {
-        display: block;
-    }
-
     fieldset {
         border : none;
         padding: 0;
         margin : 0 0 2rem;
     }
 
-    label,
     button {
         text-transform: uppercase;
         letter-spacing: 1px;
         cursor        : pointer;
     }
 
-    input[type=checkbox],
-    input[type=radio],
     button {
         background-color: darken(green, 20);
         border          : 1px solid lightgray;
         border-radius   : 5px;
         transition      : background-color 200ms ease-in-out;
-    }
-
-    input[type=checkbox],
-    input[type=radio] {
-        -webkit-appearance: none;
-        display           : inline-block;
-        width             : 1.5rem;
-        aspect-ratio      : 1;
-        margin-right      : 10px;
-        translate         : 0 .15rem;
-
-        &:checked {
-            background-color: lightgreen;
-        }
-    }
-
-    input[type=radio] {
-        border-radius: 50%;
     }
 
     button {
