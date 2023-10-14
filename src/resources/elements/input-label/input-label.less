@@ -1,0 +1,25 @@
+input-label {
+    color         : var(--mainColor);
+    font-size     : 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor        : pointer;
+
+    label {
+        display: flex;
+        cursor : pointer;
+    }
+
+    &.label--after label {
+        height         : 2.5rem;
+        flex-direction : row-reverse;
+        justify-content: flex-end;
+        align-items    : center;
+        column-gap     : .6rem;
+    }
+
+    &.label--above label {
+        flex-direction: column;
+    }
+
+}
