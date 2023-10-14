@@ -1,20 +1,26 @@
 <template class="${initial ? 'initial' : 'started'}">
     <require from="./settings.css"></require>
+    <require from="elements/range-input/range-input"></require>
+    <require from="elements/radio-set/radio-set"></require>
 
     <h2>${initial ? 'settings' : 'TypeFall'}</h2>
 
-    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
-    <button if.bind="!initial" click.delegate="pauseGame()">${paused ? 'Resume (escape)' : 'Pause (escape)'}</button>
+    <!-- fieldset wordt abstractie, type attribuut: radioSet, range geeft bijbehorend -->
+    <fieldset>
+        <radio-set name="language"
+                   options.bind="languages"
+                   selected-option.bind="selectedLanguage"></radio-set>
+    </fieldset>
 
     <fieldset>
-        <label repeat.for="lang of languages">
-          <input type="radio" name="languages"
-                  value.bind="lang.id" 
-                  model.bind="lang" 
-                  checked.bind="selectedLanguage">
-          ${lang.name}
-        </label>
+        <range-input min="0"
+                     max="100"
+                     label.bind="'level'"
+                     value.bind="myValue"></range-input>
     </fieldset>
+
+    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
+    <button if.bind="!initial" click.delegate="pauseGame()">${paused ? 'Resume (escape)' : 'Pause (escape)'}</button>
 
     <p if.bind="initial"
        class="hint">Press 'esc' to pause</p>

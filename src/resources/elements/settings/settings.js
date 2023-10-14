@@ -1,13 +1,14 @@
-import { inject, bindable, observable } from 'aurelia-framework';
+import { inject, bindable, BindingEngine } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { SettingsService } from 'services/settings-service';
 
-@inject(EventAggregator, SettingsService)
+@inject(BindingEngine, EventAggregator, SettingsService)
 export class SettingsCustomElement {
     @bindable initial
-    @observable selectedLanguage;
+    @bindable selectedLanguage;
 
-    constructor(eventAggregator, settingsService) {
+    constructor(bindingEngine, eventAggregator, settingsService) {
+        this._bindingEngine = bindingEngine;
         this._eventAggregator = eventAggregator;
         this._settingsService = settingsService;
         this.languages = [{
@@ -23,9 +24,21 @@ export class SettingsCustomElement {
     }
 
     attached() {
-        const savedLanguage = this._settingsService.getSettings('lang')?.id || 'en';
-        this.selectedLanguage = this.languages.find(lang => lang.id === savedLanguage);
-        this._eventAggregator.publish('languageChanged', this.selectedLanguage.id);
+        const savedLanguageId = this._settingsService.getSettings('lang') || 'en';
+        this.selectedLanguage = this.languages.find(language => language.id === savedLanguageId);
+        this._eventAggregator.publish('languageChanged', this.selectedLanguage);
+        setTimeout(() => {
+            this._languageChangedSubscription = this._eventAggregator.subscribe('languageChanged', language => this.selectedLanguageChanged(language));
+        }, 100);
+    }
+
+    detached() {
+        this._languageChangedSubscription.dispose();
+    }
+
+    selectedLanguageChanged(newValue) {
+        this.selectedLanguage = newValue;
+        this._settingsService.saveSettings('lang', this.selectedLanguage.id);
     }
 
     startGame() {
@@ -36,8 +49,4 @@ export class SettingsCustomElement {
         !this.initial && this._eventAggregator.publish('pause');
     }
 
-    selectedLanguageChanged(newValue) {
-        this._eventAggregator.publish('languageChanged', newValue.id);
-        this._settingsService.saveSettings('lang', newValue);
-    }
 }
