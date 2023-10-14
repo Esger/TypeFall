@@ -2,6 +2,7 @@
     <require from="./settings.css"></require>
     <require from="elements/range-input/range-input"></require>
     <require from="elements/radio-set/radio-set"></require>
+    <require from="elements/button/button"></require>
 
     <h2>${initial ? 'settings' : 'TypeFall'}</h2>
 
@@ -13,14 +14,14 @@
     </fieldset>
 
     <fieldset>
-        <range-input min="0"
-                     max="100"
+        <range-input min="1"
+                     max="2"
                      label.bind="'level'"
-                     value.bind="myValue"></range-input>
+                     value.bind="level"></range-input>
     </fieldset>
 
-    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
-    <button if.bind="!initial" click.delegate="pauseGame()">${paused ? 'Resume (escape)' : 'Pause (escape)'}</button>
+    <button click.delegate="startGame()" text-content.bind="initial ? 'Start (enter)' : 'Restart (enter)'"></button>
+    <button if.bind="!initial" click.delegate="pauseGame()" text-content.bind="paused ? 'Resume (escape)' : 'Pause (escape)'"></button>
 
     <p if.bind="initial"
        class="hint">Press 'esc' to pause</p>
