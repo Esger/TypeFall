@@ -6,6 +6,7 @@ import { SettingsService } from 'services/settings-service';
 export class SettingsCustomElement {
     @bindable initial
     @bindable selectedLanguage;
+    @bindable levelCompleted;
 
     constructor(bindingEngine, eventAggregator, settingsService) {
         this._bindingEngine = bindingEngine;
