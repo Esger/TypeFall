@@ -21,7 +21,7 @@ export class KeyInputService {
                 this._eventAggregator.publish('startGame');
                 break;
             case 'escape':
-                this._eventAggregator.publish('pause');
+                this._eventAggregator.publish('pause', true);
                 break;
             case 'space':
                 this._eventAggregator.publish('key', ' ');

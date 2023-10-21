@@ -2,14 +2,19 @@
     <require from="./status.css"></require>
 
     <div class="title ${initial ? '' : 'title--dimmed'}">
-        <h1 if.bind="!paused && !gameOver && !isMobile"
+        <h1 if.bind="(paused && initial || !paused) && !gameOver && !isMobile && !showLevel"
             class="au-animate animate-in animate-out">${title}</h1>
     </div>
 
     <slot></slot>
 
     <div class="message pause">
-        <h2 if.bind="paused && !initial && !gameOver"
+        <h2 if.bind="paused && !initial && !gameOver && showLevel"
+            class="au-animate animate-in animate-out">level ${level}</h2>
+    </div>
+
+    <div class="message pause">
+        <h2 if.bind="paused && !initial && !gameOver && !showLevel"
             class="au-animate animate-in animate-out">paused</h2>
     </div>
 

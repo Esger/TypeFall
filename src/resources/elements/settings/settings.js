@@ -46,7 +46,7 @@ export class SettingsCustomElement {
     }
 
     pauseGame() {
-        !this.initial && this._eventAggregator.publish('pause');
+        !this.initial && this._eventAggregator.publish('pause', true);
     }
 
 }

@@ -9,19 +9,29 @@ export class App {
     constructor(eventAggregator, keyInputService) {
         this._eventAggregator = eventAggregator;
         this._keyInputService = keyInputService;
-        this.paused = false;
+        this.paused = true;
         this.initial = true;
         this.gameOver = false;
         this.isMobile = false;
+        this.level = 0;
     }
 
     attached() {
-        this._startStopSubscription = this._eventAggregator.subscribe('pause', _ => {
+        this._startStopSubscription = this._eventAggregator.subscribe('pause', isPaused => {
             if (this.initial || this.gameOver) return;
-            this.paused = !this.paused;
+            this.paused = isPaused;
         });
         this._startSubscription = this._eventAggregator.subscribe('startGame', _ => {
+            if (!this.paused) return;
             this.paused = false;
+            setTimeout(_ => {
+                this.initial = false;
+                this.gameOver = false;
+            });
+        });
+        this._levelSubscription = this._eventAggregator.subscribe('level', level => {
+            this.level = level;
+            this.paused = true;
             this.initial = false;
             this.gameOver = false;
         });
@@ -30,22 +40,21 @@ export class App {
             this.paused = true;
         });
         $(window).on('resize', _ => {
-            clearTimeout(this._restartTimeout);
-            this._restartTimeout = setTimeout(_ => {
-                if (this.initial) return;
-                this._eventAggregator.publish('pause');
-                this._eventAggregator.publish('startGame');
-            }, 50);
+            if (this.initial) return;
+            this.initial = true;
+            this._eventAggregator.publish('pause', true);
         }).on('touchstart', _ => {
             this.isMobile = true;
         });
-        $('.blocks').on('click', _ => this.initial || this.gameOver ? this._eventAggregator.publish('startGame') : this._eventAggregator.publish('pause'));
+        $('.blocks').on('click', _ => this._eventAggregator.publish('pause', this.initial || this.gameOver || !this.paused));
     }
 
     detached() {
         this._startStopSubscription.dispose();
         this._startSubscription.dispose();
+        this._levelSubscription.dispose();
+        this._gameOverSubscription.dispose();
         $(window).off('resize');
-        $$('.blocks').off('click');
+        $('.blocks').off('click');
     }
 }

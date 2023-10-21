@@ -8,18 +8,24 @@
 
     <status paused.bind="paused"
             initial.bind="initial"
+            level.bind="level"
             game-over.bind="gameOver"
             is-mobile.bind="isMobile"
             containerless>
         <board if.bind="!isMobile"
                class="${paused ? 'board--dimmed' : ''}"
+               level.bind="level"
                paused.bind="paused"
                initial.bind="initial"
                game-over.bind="gameOver"></board>
         <score if.bind="!isMobile"
+               level.bind="level"
+               paused.bind="paused"
                game-over.bind="gameOver"></score>
         <settings if.bind="!isMobile"
-                  initial.bind="initial"></settings>
+                  level.bind="level"
+                  initial.bind="initial"
+                  paused.bind="paused"></settings>
     </status>
 
 </template>

@@ -4,7 +4,8 @@ import { SettingsService } from 'services/settings-service';
 
 @inject(EventAggregator, SettingsService)
 export class ScoreCustomElement {
-    @bindable gameOver
+    @bindable gameOver;
+    @bindable paused = true;
 
     constructor(eventAggregator, settingsService) {
         this.score = 0;
@@ -13,6 +14,7 @@ export class ScoreCustomElement {
         this._eventAggregator = eventAggregator;
         this._settingsService = settingsService;
         this._wordComplete = true;
+        this._resetScore = false;
     }
 
     attached() {
@@ -28,6 +30,9 @@ export class ScoreCustomElement {
                 }, 400);
             }
 
+            this.score = this._resetScore ? 0 : this.score;
+            this._resetScore = false;
+
             if (score == 5) {
                 this.score = this._wordComplete ? this.score + score : this.score;
                 this._wordComplete = true;
@@ -37,7 +42,7 @@ export class ScoreCustomElement {
 
             this._checkHighScore();
         });
-        this._startGameSubscription = this._eventAggregator.subscribe('startGame', _ => { this.score = 0 });
+        this._startGameSubscription = this._eventAggregator.subscribe('gemeOver', _ => this._resetScore = true);
     }
 
     detached() {
