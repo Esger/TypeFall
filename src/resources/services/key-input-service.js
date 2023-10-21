@@ -26,6 +26,12 @@ export class KeyInputService {
             case 'space':
                 this._eventAggregator.publish('key', ' ');
                 break;
+            case 'comma':
+                this._eventAggregator.publish('key', ',');
+                break;
+            case 'period':
+                this._eventAggregator.publish('key', '.');
+                break;
             default:
                 if (key.startsWith('key')) {
                     const letter = key.slice(-1);
