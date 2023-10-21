@@ -13,6 +13,7 @@ export class BoardCustomElement {
         this._letters = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._initialInterval = 1000; //1000;
         this._maxBlocks = 100;
+        this._lettersPerLevel = 10;
         this._typedCount = 0;
         this.maxPiles = 19;
         this.random = false;
@@ -22,7 +23,7 @@ export class BoardCustomElement {
             'random': 'random'
         };
         this._allowedCharSets = [
-            'asdfjkl', ' eruio', 'ghtyvb', 'qwert', 'zxcvnm', '.,?!:;/-', '1234567890',
+            'asdfjkl', ' eruio', 'ghtyvb', 'qwert', 'zxcvnm', '.,;/-', '1234567890', '?!:'
         ]
         this._maxLevel = this._allowedCharSets.length - 1;
         this.nextCharIndex = 0;
@@ -88,7 +89,7 @@ export class BoardCustomElement {
         allowedText = allowedTextArray.filter(char => inAllowedCharacters(char)).join('');
 
         // each subsequent level is 50 characters longer
-        this._levelCharCount = (this.level + 1) * 50;
+        this._levelCharCount = (this.level + 1) * this._lettersPerLevel;
         allowedText = allowedText.substring(0, this._levelCharCount);
 
         this.nextCharIndex = 0;
@@ -125,6 +126,12 @@ export class BoardCustomElement {
     _levelComplete() {
         const newLevel = Math.min(this.level + 1, this._maxLevel);
         this._eventAggregator.publish('level', newLevel);
+        this._blocksEmptyPollTimer = setInterval(_ => {
+            if (this.blocks.length == 0) {
+                this._eventAggregator.publish('levelComplete');
+                clearInterval(this._blocksEmptyPollTimer);
+            }
+        }, 200);
     }
 
     _checkTyped(key) {
