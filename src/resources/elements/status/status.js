@@ -3,6 +3,7 @@ import { inject, bindable } from 'aurelia-framework';
 export class StatusCustomElement {
     @bindable paused = true;
     @bindable level = 0;
+    @bindable levelCompleted;
     @bindable initial;
     @bindable gameOver;
     @bindable isMobile;
@@ -12,13 +13,7 @@ export class StatusCustomElement {
         this.showLevel = false;
     }
 
-    pausedChanged() {
-        this.showLevel = false;
-    }
-
-    levelChanged(newLevel, oldLevel) {
-        setTimeout(() => {
-            this.showLevel = newLevel !== oldLevel;
-        }, 1000);
+    levelCompletedChanged(value) {
+        this.showLevel = value;
     }
 }

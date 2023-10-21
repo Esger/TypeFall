@@ -14,6 +14,7 @@ export class App {
         this.gameOver = false;
         this.isMobile = false;
         this.level = 0;
+        this.levelCompleted = false;
     }
 
     attached() {
@@ -24,6 +25,7 @@ export class App {
         this._startSubscription = this._eventAggregator.subscribe('startGame', _ => {
             if (!this.paused) return;
             this.paused = false;
+            this.levelCompleted = false;
             setTimeout(_ => {
                 this.initial = false;
                 this.gameOver = false;
@@ -31,9 +33,12 @@ export class App {
         });
         this._levelSubscription = this._eventAggregator.subscribe('level', level => {
             this.level = level;
-            this.paused = true;
             this.initial = false;
             this.gameOver = false;
+        });
+        this._levelCompleteSubscription = this._eventAggregator.subscribe('levelComplete', _ => {
+            this.levelCompleted = true;
+            this.paused = true;
         });
         this._gameOverSubscription = this._eventAggregator.subscribe('gameOver', _ => {
             this.gameOver = true;
@@ -53,6 +58,7 @@ export class App {
         this._startStopSubscription.dispose();
         this._startSubscription.dispose();
         this._levelSubscription.dispose();
+        this._levelCompleteSubscription.dispose();
         this._gameOverSubscription.dispose();
         $(window).off('resize');
         $('.blocks').off('click');
