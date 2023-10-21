@@ -6,6 +6,7 @@ import { SettingsService } from 'services/settings-service';
 export class ScoreCustomElement {
     @bindable gameOver;
     @bindable paused = true;
+    @bindable level;
 
     constructor(eventAggregator, settingsService) {
         this.score = 0;
