@@ -28,12 +28,11 @@ export class SettingsCustomElement {
 
     attached() {
         const savedLanguageId = this._settingsService.getSettings('lang') || 'en';
-        const savedLastLevel = this._settingsService.getSettings('level') || 0;
-        if (savedLastLevel > this.level) {
-            this.level = savedLastLevel;
-            this._eventAggregator.publish('level', this.level);
-        }
         this.selectedLanguage = this.languages.find(language => language.id === savedLanguageId);
+
+        const savedLastLevel = this._settingsService.getSettings('level') || 0;
+        this.level = Math.max(savedLastLevel, this.level);
+
         this._eventAggregator.publish('languageChanged', this.selectedLanguage);
         setTimeout(() => {
             this._languageChangedSubscription = this._eventAggregator.subscribe('languageChanged', language => this.selectedLanguageChanged(language));
@@ -50,9 +49,7 @@ export class SettingsCustomElement {
     }
 
     levelChanged(newValue) {
-        this._lastLevel = newValue;
         this._settingsService.saveSettings('level', newValue);
-        console.log(newValue);
     }
 
     startGame() {

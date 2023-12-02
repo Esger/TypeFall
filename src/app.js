@@ -32,15 +32,16 @@ export class App {
                 this.gameOver = false;
             });
         });
-        this._levelSubscription = this._eventAggregator.subscribe('level', level => {
+        this._setLevelSubscription = this._eventAggregator.subscribe('level', level => {
             this.levelCompleted = false;
             this.gameOver = false;
-            this.level = parseInt(level, 10);
+            this.level = level;
             if (level > 0) {
                 this.initial = false;
             }
         });
         this._levelCompleteSubscription = this._eventAggregator.subscribe('levelComplete', _ => {
+            this.level = Math.min(this.level + 1, this.maxLevel);
             this.levelCompleted = true;
             this.paused = true;
         });
@@ -61,7 +62,7 @@ export class App {
     detached() {
         this._startStopSubscription.dispose();
         this._startSubscription.dispose();
-        this._levelSubscription.dispose();
+        this._levelUpSubscription.dispose();
         this._levelCompleteSubscription.dispose();
         this._gameOverSubscription.dispose();
         $(window).off('resize');

@@ -123,12 +123,10 @@ export class BoardCustomElement {
     }
 
     _levelComplete() {
-        const newLevel = Math.min(this.level + 1, this.maxLevel);
-        this._eventAggregator.publish('level', newLevel);
         this._blocksEmptyPollTimer = setInterval(_ => {
             if (this.blocks.length == 0) {
-                this._eventAggregator.publish('levelComplete');
                 clearInterval(this._blocksEmptyPollTimer);
+                this._eventAggregator.publish('levelComplete');
             }
         }, 200);
     }

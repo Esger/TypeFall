@@ -6,14 +6,14 @@ export class RangeInputCustomElement {
     @bindable value;
     @bindable min = 0;
     @bindable max = 3;
-    @bindable label;
+    @bindable label = 'label';
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
     }
 
-    valueChanged(newValue) {
-        this._eventAggregator.publish('level', newValue);
+    newValue() {
+        this._eventAggregator.publish(this.label.toLowerCase() + '', this.value);
     }
 }
 
