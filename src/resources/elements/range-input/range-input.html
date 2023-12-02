@@ -3,12 +3,12 @@
     <require from="./range-input.css"></require>
 
     <input-label for.bind="label"
-                 label-text.bind="label"
+                 label-text.bind="label + ' ' + value"
                  class="label--above">
         <input type="range"
                 name.bind="label"
-                value.bind="level"
-                min.bind="min"
+                value.bind="value"
+                min.bind="0"
                 max.bind="max"
                 step="1">
     </input-label>

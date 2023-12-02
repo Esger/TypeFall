@@ -21,10 +21,10 @@
                game-over.bind="gameOver"></board>
         <score if.bind="!isMobile"
                level.bind="level"
-               paused.bind="paused"
                game-over.bind="gameOver"></score>
         <settings if.bind="!isMobile"
                   level.bind="level"
+                  max-level.bind="maxLevel"
                   level-completed.bind="levelCompleted"
                   initial.bind="initial"
                   paused.bind="paused"></settings>
