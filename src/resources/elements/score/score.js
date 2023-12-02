@@ -5,7 +5,6 @@ import { SettingsService } from 'services/settings-service';
 @inject(EventAggregator, SettingsService)
 export class ScoreCustomElement {
     @bindable gameOver;
-    @bindable paused = true;
     @bindable level;
 
     constructor(eventAggregator, settingsService) {
@@ -43,12 +42,14 @@ export class ScoreCustomElement {
 
             this._checkHighScore();
         });
-        this._startGameSubscription = this._eventAggregator.subscribe('gemeOver', _ => this._resetScore = true);
     }
 
     detached() {
         this._scoreSubscription.dispose();
-        this._startGameSubscription.dispose();
+    }
+
+    gameOverChanged(oldValue, newValue) {
+        this._resetScore = newValue;
     }
 
     _checkHighScore() {
