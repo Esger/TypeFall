@@ -6,12 +6,13 @@
 
     <h2>${initial ? 'settings' : 'TypeFall'}</h2>
 
+    <button click.delegate="startGame()" text-content.bind="initial ? 'Start (enter)' : 'Resume (enter)'"></button>
+    <button if.bind="!initial" click.delegate="pauseGame()" text-content.bind="'Pause (escape)'"></button>
+
+    <p if.bind="initial"
+       class="hint">Press 'esc' to pause</p>
+
     <!-- fieldset wordt abstractie, type attribuut: radioSet, range geeft bijbehorend -->
-    <fieldset>
-        <radio-set name="language"
-                   options.bind="languages"
-                   selected-option.bind="selectedLanguage"></radio-set>
-    </fieldset>
 
     <fieldset>
         <range-input min.bind="0"
@@ -20,11 +21,11 @@
                      value.bind="level"></range-input>
     </fieldset>
 
-    <button click.delegate="startGame()" text-content.bind="initial ? 'Start (enter)' : 'Resume (enter)'"></button>
-    <button if.bind="!initial" click.delegate="pauseGame()" text-content.bind="'Pause (escape)'"></button>
-
-    <p if.bind="initial"
-       class="hint">Press 'esc' to pause</p>
+    <fieldset>
+        <radio-set name="language"
+                   options.bind="languages"
+                   selected-option.bind="selectedLanguage"></radio-set>
+    </fieldset>
 
     <p><small><sup>&copy </sup><a href="/">ashWare</a></small></p>
 
