@@ -23,9 +23,9 @@ export class BoardCustomElement {
             'random': 'random'
         };
         this._allowedCharSets = [
-            'asdfjkl', ' eruio', 'ghtyvb', 'qwert', 'zxcvnm', '.,;/-', '1234567890', '?!:'
+            'asdfjkl', ' eruio', 'ghtyvb', 'qwert', 'zxcvnm', '.,;/-', '?!:', '1234567890'
         ]
-        this.nextCharIndex = 0;
+        this._nextCharIndex = 0;
     }
 
     attached() {
@@ -46,13 +46,6 @@ export class BoardCustomElement {
         this._keyboardSubscription?.dispose();
         this._pauseSubscription.dispose();
         this._languageToggleSubscription.dispose();
-    }
-
-    levelChanged(newLevel) {
-        if (newLevel > 0) {
-            this._addInterval = this._initialInterval;
-            this._text = this._getLettersForCurrentLevel();
-        }
     }
 
     pausedChanged(paused) {
@@ -81,7 +74,8 @@ export class BoardCustomElement {
         const allowedTextArray = allowedText.split('');
 
         // get string of allowed characters for level
-        let allowedCharacters = this._allowedCharSets.slice(0, this.level + 1).join('');
+        const lastSlice = Math.max(this.level, this._allowedCharSets.length - 1);
+        let allowedCharacters = this._allowedCharSets.slice(0, lastSlice).join('');
 
         // filter out characters that are not meant for this level
         const inAllowedCharacters = char => allowedCharacters.includes(char.toLocaleLowerCase());
@@ -91,19 +85,18 @@ export class BoardCustomElement {
         this._levelCharCount = (this.level + 1) * this._lettersPerLevel;
         allowedText = allowedText.substring(0, this._levelCharCount);
 
-        this.nextCharIndex = 0;
         return allowedText;
     }
 
     _nextLetter() {
-        if (this.paused || !this._text || this.blocks?.length > this._maxBlocks) return;
+        if (this.paused || !this._text || this.blocks?.length > this._maxBlocks) return false;
         let letter;
         if (this.random) {
             letter = this._letters[Math.floor(Math.random() * this._letters.length)];
         } else {
-            letter = this._text.charAt(this.nextCharIndex).toLocaleLowerCase();
-            this.nextCharIndex++;
-            if (this.nextCharIndex > this._levelCharCount) {
+            letter = this._text.charAt(this._nextCharIndex).toLocaleLowerCase();
+            this._nextCharIndex++;
+            if (this._nextCharIndex > this._levelCharCount) {
                 return false;
             }
             if (!letter) return false;
@@ -123,12 +116,15 @@ export class BoardCustomElement {
     }
 
     _levelComplete() {
+        if (this.paused) return;
         this._blocksEmptyPollTimer = setInterval(_ => {
             if (this.blocks.length == 0) {
-                clearInterval(this._blocksEmptyPollTimer);
+                this._text = this._getLettersForCurrentLevel();
+                this._nextCharIndex = 0;
                 this._eventAggregator.publish('levelComplete');
+                clearInterval(this._blocksEmptyPollTimer);
             }
-        }, 200);
+        }, 500);
     }
 
     _checkTyped(key) {
@@ -171,11 +167,10 @@ export class BoardCustomElement {
 
     _resumeGame() {
         if (this.gameOver) return;
-        clearInterval(this._letterAdderIntervalId);
         this._letterAdderIntervalId = setInterval(_ => {
             if (!this._nextLetter()) {
-                clearInterval(this._letterAdderIntervalId);
                 this._levelComplete();
+                clearInterval(this._letterAdderIntervalId);
             }
         }, this._addInterval);
     }

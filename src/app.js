@@ -28,17 +28,17 @@ export class App {
             this.paused = false;
             this.levelCompleted = false;
             setTimeout(_ => {
-                this.initial = false;
                 this.gameOver = false;
+                this.initial = false;
             });
         });
         this._setLevelSubscription = this._eventAggregator.subscribe('level', level => {
-            this.levelCompleted = false;
-            this.gameOver = false;
             this.level = level;
             if (level > 0) {
                 this.initial = false;
             }
+            this.levelCompleted = false;
+            this.gameOver = false;
         });
         this._levelCompleteSubscription = this._eventAggregator.subscribe('levelComplete', _ => {
             this.level = Math.min(this.level + 1, this.maxLevel);
