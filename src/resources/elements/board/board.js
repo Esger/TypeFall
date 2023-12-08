@@ -6,6 +6,7 @@ export class BoardCustomElement {
     @bindable paused = true;
     @bindable level;
     @bindable gameOver;
+    @bindable gameCompleted;
     @bindable initial;
 
     constructor(eventAggregator) {
@@ -49,11 +50,26 @@ export class BoardCustomElement {
     }
 
     pausedChanged(paused) {
-        paused ? this._pauseGame() : this.initial ? this._startGame() : this._resumeGame();
+        if (paused) {
+            this._pauseGame();
+        } else {
+            if (this.initial) {
+                this._startGame();
+            } else {
+                this._resumeGame();
+            }
+        }
     }
 
     gameOverChanged(gameOver) {
         gameOver && this._dropAllBlocks()
+    }
+
+    gameCompletedChanged(gameCompleted) {
+        if (gameCompleted) {
+            this._getLettersForCurrentLevel();
+            this._nextCharIndex = 0;
+        }
     }
 
     _adjustGameSpeed(score) {
@@ -74,7 +90,7 @@ export class BoardCustomElement {
         const allowedTextArray = allowedText.split('');
 
         // get string of allowed characters for level
-        const lastSlice = Math.max(this.level, this._allowedCharSets.length - 1);
+        const lastSlice = Math.min(this.level + 1, this._allowedCharSets.length - 1);
         let allowedCharacters = this._allowedCharSets.slice(0, lastSlice).join('');
 
         // filter out characters that are not meant for this level
@@ -89,7 +105,7 @@ export class BoardCustomElement {
     }
 
     _nextLetter() {
-        if (this.paused || !this._text || this.blocks?.length > this._maxBlocks) return false;
+        if (this.paused || this.gameCompleted || !this._text || this.blocks?.length > this._maxBlocks) return false;
         let letter;
         if (this.random) {
             letter = this._letters[Math.floor(Math.random() * this._letters.length)];
@@ -116,7 +132,7 @@ export class BoardCustomElement {
     }
 
     _levelComplete() {
-        if (this.paused) return;
+        if (this.paused) return false;
         this._blocksEmptyPollTimer = setInterval(_ => {
             if (this.blocks.length == 0) {
                 this._text = this._getLettersForCurrentLevel();

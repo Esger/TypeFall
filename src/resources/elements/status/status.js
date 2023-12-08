@@ -6,6 +6,7 @@ export class StatusCustomElement {
     @bindable levelCompleted;
     @bindable initial;
     @bindable gameOver;
+    @bindable gameCompleted;
     @bindable isMobile;
 
     constructor() {
@@ -16,4 +17,5 @@ export class StatusCustomElement {
     levelCompletedChanged(value) {
         this.showLevel = value;
     }
+
 }

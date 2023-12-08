@@ -8,19 +8,24 @@
 
     <slot></slot>
 
-    <div class="message pause">
-        <h2 if.bind="paused && !initial && !gameOver && showLevel"
+    <div class="message">
+        <h2 if.bind="paused && !initial && !gameOver && !gameCompleted && showLevel"
             class="au-animate animate-in animate-out">level ${level}</h2>
     </div>
 
-    <div class="message pause">
-        <h2 if.bind="paused && !initial && !gameOver && !showLevel"
+    <div class="message">
+        <h2 if.bind="paused && !initial && !gameOver && !gameCompleted && !showLevel"
             class="au-animate animate-in animate-out">paused</h2>
     </div>
 
     <div class="message">
         <h2 if.bind="gameOver"
             class="gameOver au-animate animate-in animate-out">game over</h2>
+    </div>
+
+    <div class="message">
+        <h2 if.bind="gameCompleted"
+            class="au-animate animate-in animate-out">well done</h2>
     </div>
 
     <div class="message">

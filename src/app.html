@@ -11,6 +11,7 @@
             level.bind="level"
             level-completed.bind="levelCompleted"
             game-over.bind="gameOver"
+            game-completed.bind="gameCompleted"
             is-mobile.bind="isMobile"
             containerless>
         <board if.bind="!isMobile"
@@ -18,6 +19,7 @@
                level.bind="level"
                paused.bind="paused"
                initial.bind="initial"
+               game-completed.bind="gameCompleted"
                game-over.bind="gameOver"></board>
         <score if.bind="!isMobile"
                level.bind="level"

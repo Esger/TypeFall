@@ -16,6 +16,7 @@ export class App {
         this.level = 0;
         this.maxLevel = 5;
         this.levelCompleted = false;
+        this.gameCompleted = false;
     }
 
     attached() {
@@ -25,6 +26,10 @@ export class App {
         });
         this._startSubscription = this._eventAggregator.subscribe('startGame', _ => {
             if (!this.paused) return;
+            if (this.gameCompleted) {
+                this.level = 0;
+                this.gameCompleted = false;
+            }
             this.paused = false;
             this.levelCompleted = false;
             setTimeout(_ => {
@@ -41,8 +46,12 @@ export class App {
             this.gameOver = false;
         });
         this._levelCompleteSubscription = this._eventAggregator.subscribe('levelComplete', _ => {
-            this.level = Math.min(this.level + 1, this.maxLevel);
+            if (this.level == this.maxLevel) {
+                this.gameCompleted = true;
+            } else {
             this.levelCompleted = true;
+                this.level++;
+            }
             this.paused = true;
         });
         this._gameOverSubscription = this._eventAggregator.subscribe('gameOver', _ => {
@@ -52,7 +61,7 @@ export class App {
         $(window).on('resize', _ => {
             if (this.initial) return;
             this.initial = true;
-            this._eventAggregator.publish('pause', true);
+            this.paused = true;
         }).on('touchstart', _ => {
             this.isMobile = true;
         });
