@@ -13,7 +13,8 @@ export class RangeInputCustomElement {
     }
 
     newValue() {
-        this._eventAggregator.publish(this.label.toLowerCase() + '', this.value);
+        const inputName = this.label.toLowerCase();
+        this._eventAggregator.publish(inputName, this.value);
     }
 }
 
