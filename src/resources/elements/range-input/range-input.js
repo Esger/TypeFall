@@ -4,7 +4,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 @inject(EventAggregator)
 export class RangeInputCustomElement {
     @bindable value;
-    @bindable min = 0;
+    @bindable min = 1;
     @bindable max = 3;
     @bindable label = 'label';
 
