@@ -62,17 +62,8 @@ export class BoardCustomElement {
     }
 
     gameOverChanged(gameOver) {
+        this._pauseGame();
         gameOver && this._dropAllBlocks()
-    }
-
-    gameCompletedChanged(gameCompleted) {
-        if (gameCompleted) {
-            this._nextCharIndex = 0;
-        }
-    }
-
-    levelChanged() {
-        this._text = this._getLettersForCurrentLevel();
     }
 
     _adjustGameSpeed(score) {
@@ -139,7 +130,6 @@ export class BoardCustomElement {
         this._blocksEmptyPollTimer = setInterval(_ => {
             if (this.blocks.length == 0) {
                 clearInterval(this._blocksEmptyPollTimer);
-                this._nextCharIndex = 0;
                 this._eventAggregator.publish('levelComplete');
             }
         }, 500);
@@ -179,6 +169,8 @@ export class BoardCustomElement {
         this.blocks = [];
         this.pileHeights = [...new Array(this.maxPiles)].map(_ => 0);
         $('.pile').children().remove();
+        this._text = this._getLettersForCurrentLevel();
+        this._nextCharIndex = 0;
         this._addInterval = this._initialInterval;
         this._resumeGame();
     }
@@ -196,11 +188,6 @@ export class BoardCustomElement {
     _pauseGame() {
         clearInterval(this._letterAdderIntervalId);
         this._letterAdderIntervalId = undefined;
-    }
-
-    _endGame() {
-        this.gameOver = true;
-        this._pauseGame();
     }
 
 }
