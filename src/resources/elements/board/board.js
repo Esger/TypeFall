@@ -67,9 +67,12 @@ export class BoardCustomElement {
 
     gameCompletedChanged(gameCompleted) {
         if (gameCompleted) {
-            this._getLettersForCurrentLevel();
             this._nextCharIndex = 0;
         }
+    }
+
+    levelChanged() {
+        this._text = this._getLettersForCurrentLevel();
     }
 
     _adjustGameSpeed(score) {
@@ -90,7 +93,7 @@ export class BoardCustomElement {
         const allowedTextArray = allowedText.split('');
 
         // get string of allowed characters for level
-        const lastSlice = Math.min(this.level + 1, this._allowedCharSets.length - 1);
+        const lastSlice = Math.min(this.level, this._allowedCharSets.length - 1);
         let allowedCharacters = this._allowedCharSets.slice(0, lastSlice).join('');
 
         // filter out characters that are not meant for this level
@@ -98,7 +101,7 @@ export class BoardCustomElement {
         allowedText = allowedTextArray.filter(char => inAllowedCharacters(char)).join('');
 
         // each subsequent level is 50 characters longer
-        this._levelCharCount = (this.level + 1) * this._lettersPerLevel;
+        this._levelCharCount = this.level * this._lettersPerLevel;
         allowedText = allowedText.substring(0, this._levelCharCount);
 
         return allowedText;
@@ -135,10 +138,9 @@ export class BoardCustomElement {
         if (this.paused) return false;
         this._blocksEmptyPollTimer = setInterval(_ => {
             if (this.blocks.length == 0) {
-                this._text = this._getLettersForCurrentLevel();
+                clearInterval(this._blocksEmptyPollTimer);
                 this._nextCharIndex = 0;
                 this._eventAggregator.publish('levelComplete');
-                clearInterval(this._blocksEmptyPollTimer);
             }
         }, 500);
     }

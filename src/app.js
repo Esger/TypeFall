@@ -13,8 +13,8 @@ export class App {
         this.initial = true;
         this.gameOver = false;
         this.isMobile = false;
-        this.level = 0;
-        this.maxLevel = 5;
+        this._startLevel = 1;
+        this.level = this._startLevel;
         this.levelCompleted = false;
         this.gameCompleted = false;
     }
@@ -27,8 +27,8 @@ export class App {
         this._startSubscription = this._eventAggregator.subscribe('startGame', _ => {
             if (!this.paused) return;
             if (this.gameCompleted) {
-                this.level = 0;
                 this.gameCompleted = false;
+                this.level = this._startLevel;
             }
             this.paused = false;
             this.levelCompleted = false;
@@ -39,7 +39,7 @@ export class App {
         });
         this._setLevelSubscription = this._eventAggregator.subscribe('level', level => {
             this.level = level;
-            if (level > 0) {
+            if (level > this._startLevel) {
                 this.initial = false;
             }
             this.levelCompleted = false;
