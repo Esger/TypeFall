@@ -16,9 +16,11 @@
             containerless>
         <board if.bind="!isMobile"
                class="${paused ? 'board--dimmed' : ''}"
+               language.bind="language"
                level.bind="level"
                paused.bind="paused"
                initial.bind="initial"
+               level-completed.bind="levelCompleted"
                game-completed.bind="gameCompleted"
                game-over.bind="gameOver"></board>
         <score if.bind="!isMobile"

@@ -5,6 +5,8 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 export class BoardCustomElement {
     @bindable paused = true;
     @bindable level;
+    @bindable language;
+    @bindable levelCompleted;
     @bindable gameOver;
     @bindable gameCompleted;
     @bindable initial;
@@ -17,7 +19,7 @@ export class BoardCustomElement {
         this._lettersPerLevel = 50;
         this._typedCount = 0;
         this.maxPiles = 19;
-        this.random = false;
+        this._random = false;
         this._texts = {
             'nl': 'In de schemering van de tijd, waar dromen en werkelijkheid elkaar ontmoeten als oude vrienden, strekte het duistere mysterie van de nacht zich uit over de stad. Een stad diep doordrenkt met geheimen, verborgen achter de facade van schijnbare normaliteit. Hier begint ons verhaal, waarvan de hoofdrolspeler zijn weg baant door het doolhof van zijn eigen ziel, terwijl de schaduwen fluisteren en de maan haar bleke licht werpt op de verborgen waarheden die zich in de donkerste hoeken verschuilen. Dit is een verhaal van betovering en bedrog, van onverwachte ontmoetingen en vergeten herinneringen, een verhaal dat zich afspeelt in een wereld waar de grens tussen wat echt is en wat slechts een droom lijkt te vervagen, zoals de zachte afdruk van een verloren kus op de rand van de nacht.',
             'en': 'In the twilight of time, where dreams and reality intertwine like old friends, the enigmatic shroud of night stretched across the city. A city steeped in secrets, concealed beneath the veneer of apparent normalcy. Here, our tale commences, with its protagonist navigating the labyrinth of his own soul, as shadows whisper and the moon casts its pale light upon the hidden truths lurking in the darkest corners. This is a narrative of enchantment and deception, of chance encounters and forgotten memories, a tale set in a realm where the boundary between what is real and what appears to be but a dream blurs, much like the gentle imprint of a lost kiss on the edge of night.',
@@ -33,11 +35,6 @@ export class BoardCustomElement {
         this._letterRemoveSubscription = this._eventAggregator.subscribe('remove', id => this._removeLetter(id));
         this._keyboardSubscription = this._eventAggregator.subscribe('key', key => this._checkTyped(key));
         this._scoreSubscription = this._eventAggregator.subscribe('score', score => this._adjustGameSpeed(score));
-        this._languageToggleSubscription = this._eventAggregator.subscribe('languageChanged', lang => {
-            this.random = lang.name == 'random';
-            this._languageId = lang.id;
-            this._text = this._getLettersForCurrentLevel();
-        });
     }
 
     detached() {
@@ -46,14 +43,13 @@ export class BoardCustomElement {
         this._letterRemoveInterval?.dispose();
         this._keyboardSubscription?.dispose();
         this._pauseSubscription.dispose();
-        this._languageToggleSubscription.dispose();
     }
 
     pausedChanged(paused) {
         if (paused) {
             this._pauseGame();
         } else {
-            if (this.initial) {
+            if (this.initial || this.gameOver || this.gameCompleted || this.levelCompleted) {
                 this._startGame();
             } else {
                 this._resumeGame();
@@ -61,9 +57,18 @@ export class BoardCustomElement {
         }
     }
 
+    languageChanged(lang) {
+        if (!lang) return;
+        this._random = lang.name == 'random';
+        this._languageId = lang.id;
+    }
+
+    levelChanged() {
+        this._nextCharIndex = 0;
+    }
+
     gameOverChanged(gameOver) {
-        this._pauseGame();
-        gameOver && this._dropAllBlocks()
+        gameOver && this._dropAllBlocks();
     }
 
     _adjustGameSpeed(score) {
@@ -101,16 +106,17 @@ export class BoardCustomElement {
     _nextLetter() {
         if (this.paused || this.gameCompleted || !this._text || this.blocks?.length > this._maxBlocks) return false;
         let letter;
-        if (this.random) {
+        if (this._random) {
             letter = this._letters[Math.floor(Math.random() * this._letters.length)];
         } else {
-            letter = this._text.charAt(this._nextCharIndex).toLocaleLowerCase();
-            this._nextCharIndex++;
             if (this._nextCharIndex > this._levelCharCount) {
                 return false;
+            } else {
+                letter = this._text.charAt(this._nextCharIndex).toLocaleLowerCase();
+                this._nextCharIndex++;
             }
-            if (!letter) return false;
         }
+        if (!letter) return false;
         const nextBlock = {
             letter: letter,
             id: letter + performance.now(),
@@ -170,13 +176,12 @@ export class BoardCustomElement {
         this.pileHeights = [...new Array(this.maxPiles)].map(_ => 0);
         $('.pile').children().remove();
         this._text = this._getLettersForCurrentLevel();
-        this._nextCharIndex = 0;
         this._addInterval = this._initialInterval;
         this._resumeGame();
+        this._eventAggregator.publish('gameStarted');
     }
 
     _resumeGame() {
-        if (this.gameOver) return;
         this._letterAdderIntervalId = setInterval(_ => {
             if (!this._nextLetter()) {
                 this._levelComplete();

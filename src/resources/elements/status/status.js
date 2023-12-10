@@ -11,11 +11,6 @@ export class StatusCustomElement {
 
     constructor() {
         this.title = 'TypeFall';
-        this.showLevel = false;
-    }
-
-    levelCompletedChanged(value) {
-        this.showLevel = value;
     }
 
 }

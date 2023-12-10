@@ -48,8 +48,8 @@ export class SettingsCustomElement {
         this._settingsService.saveSettings('lang', this.selectedLanguage.id);
     }
 
-    levelChanged(newValue) {
-        this._settingsService.saveSettings('level', newValue);
+    levelChanged(level) {
+        this._settingsService.saveSettings('level', level);
     }
 
     startGame() {
