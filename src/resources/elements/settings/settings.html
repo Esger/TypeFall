@@ -1,25 +1,33 @@
-<template class="${initial ? 'initial' : 'started'}">
+<template class="${initial || levelCompleted ? 'visible' : 'started'}">
     <require from="./settings.css"></require>
+    <require from="elements/range-input/range-input"></require>
+    <require from="elements/radio-set/radio-set"></require>
+    <require from="elements/button/button"></require>
 
     <h2>${initial ? 'settings' : 'TypeFall'}</h2>
 
-    <button click.delegate="startGame()">${initial ? 'Start (enter)' : 'Restart (enter)'}</button>
-    <button if.bind="!initial" click.delegate="pauseGame()">${paused ? 'Resume (escape)' : 'Pause (escape)'}</button>
-
-    <fieldset>
-        <label repeat.for="lang of languages">
-          <input type="radio" name="languages"
-                  value.bind="lang.id" 
-                  model.bind="lang" 
-                  checked.bind="selectedLanguage">
-          ${lang.name}
-        </label>
-    </fieldset>
+    <button click.delegate="startGame()" text-content.bind="initial ? 'Start (enter)' : 'Resume (enter)'"></button>
+    <button if.bind="!initial" click.delegate="pauseGame()" text-content.bind="'Pause (escape)'"></button>
 
     <p if.bind="initial"
        class="hint">Press 'esc' to pause</p>
 
-    <p><small><sup>&copy </sup><a href="/">ashware</a></small></p>
+    <!-- fieldset wordt abstractie, type attribuut: radioSet, range geeft bijbehorend -->
+
+    <fieldset>
+        <range-input min.bind="1"
+                     max.bind="maxLevel"
+                     label.bind="'Level'"
+                     value.bind="level"></range-input>
+    </fieldset>
+
+    <fieldset>
+        <radio-set name="language"
+                   options.bind="languages"
+                   selected-option.bind="selectedLanguage"></radio-set>
+    </fieldset>
+
+    <p><small><sup>&copy </sup><a href="/">ashWare</a></small></p>
 
     <p class="hamburger">=</p>
 

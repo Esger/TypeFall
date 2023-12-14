@@ -1,16 +1,15 @@
 settings {
-    --background    : fade(lightgreen, 10%);
     position        : absolute;
     top             : -1px;
     left            : -1px;
     padding         : 0 5rem 2rem 2.5rem;
-    border-radius   : 0 0 5rem;
+    border-radius   : 0 0 3rem;
     background-color: var(--background);
-    border          : 1px solid lightgrey;
+    border          : 1px solid var(--accentColor);
     box-shadow      : -4rem 0 var(--background);
     transition      : transform 300ms ease-out;
 
-    &.initial {
+    &.visible {
         transform: translate3d(0, 0, 0);
     }
 
@@ -42,8 +41,7 @@ settings {
         font-weight: normal;
     }
 
-    h2,
-    label {
+    h2 {
         font-size: 1.5rem;
         color    : green;
     }
@@ -63,63 +61,13 @@ settings {
         bottom  : 1rem;
     }
 
-    &.initial .hamburger {
+    &.visible .hamburger {
         opacity: 0;
-    }
-
-    label {
-        display: block;
     }
 
     fieldset {
         border : none;
         padding: 0;
         margin : 0 0 2rem;
-    }
-
-    label,
-    button {
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor        : pointer;
-    }
-
-    input[type=checkbox],
-    input[type=radio],
-    button {
-        background-color: darken(green, 20);
-        border          : 1px solid lightgray;
-        border-radius   : 5px;
-        transition      : background-color 200ms ease-in-out;
-    }
-
-    input[type=checkbox],
-    input[type=radio] {
-        -webkit-appearance: none;
-        display           : inline-block;
-        width             : 1.5rem;
-        aspect-ratio      : 1;
-        margin-right      : 10px;
-        translate         : 0 .15rem;
-
-        &:checked {
-            background-color: lightgreen;
-        }
-    }
-
-    input[type=radio] {
-        border-radius: 50%;
-    }
-
-    button {
-        display: block;
-        margin : 0 0 2rem;
-        padding: .5rem 1rem;
-        color  : green;
-
-        &:hover {
-            background-color: lightgreen;
-            color           : black;
-        }
     }
 }

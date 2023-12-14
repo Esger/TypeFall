@@ -1,0 +1,27 @@
+input[type=checkbox],
+input[type=radio] {
+    background-color: transparent;
+    border          : 1px solid var(--mainColor);
+    border-radius   : 5px;
+    transition      : background-color 200ms ease-in-out;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    -webkit-appearance: none;
+    display           : inline-block;
+    width             : 1.5rem;
+    height            : 1.5rem;
+
+    &:hover {
+        background-color: var(--slightAccentColor);
+    }
+
+    &:checked {
+        background-color: var(--accentColor);
+    }
+}
+
+input[type=radio] {
+    border-radius: 50%;
+}

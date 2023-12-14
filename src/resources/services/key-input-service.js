@@ -21,10 +21,16 @@ export class KeyInputService {
                 this._eventAggregator.publish('startGame');
                 break;
             case 'escape':
-                this._eventAggregator.publish('pause');
+                this._eventAggregator.publish('pause', true);
                 break;
             case 'space':
                 this._eventAggregator.publish('key', ' ');
+                break;
+            case 'comma':
+                this._eventAggregator.publish('key', ',');
+                break;
+            case 'period':
+                this._eventAggregator.publish('key', '.');
                 break;
             default:
                 if (key.startsWith('key')) {

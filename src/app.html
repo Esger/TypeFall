@@ -8,18 +8,31 @@
 
     <status paused.bind="paused"
             initial.bind="initial"
+            level.bind="level"
+            level-completed.bind="levelCompleted"
             game-over.bind="gameOver"
+            game-completed.bind="gameCompleted"
             is-mobile.bind="isMobile"
             containerless>
         <board if.bind="!isMobile"
                class="${paused ? 'board--dimmed' : ''}"
+               language.bind="language"
+               level.bind="level"
                paused.bind="paused"
                initial.bind="initial"
+               level-completed.bind="levelCompleted"
+               game-completed.bind="gameCompleted"
                game-over.bind="gameOver"></board>
         <score if.bind="!isMobile"
+               level.bind="level"
+               language.bind="language.name"
                game-over.bind="gameOver"></score>
         <settings if.bind="!isMobile"
-                  initial.bind="initial"></settings>
+                  level.bind="level"
+                  max-level.bind="maxLevel"
+                  level-completed.bind="levelCompleted"
+                  initial.bind="initial"
+                  paused.bind="paused"></settings>
     </status>
 
 </template>
