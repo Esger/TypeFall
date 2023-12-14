@@ -32,11 +32,6 @@ export class SettingsCustomElement {
 
         const savedLastLevel = this._settingsService.getSettings('level') || 0;
         this.level = Math.max(savedLastLevel, this.level);
-
-        this._eventAggregator.publish('languageChanged', this.selectedLanguage);
-        setTimeout(() => {
-            this._languageChangedSubscription = this._eventAggregator.subscribe('languageChanged', language => this.selectedLanguageChanged(language));
-        }, 100);
     }
 
     detached() {

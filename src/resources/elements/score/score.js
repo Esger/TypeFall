@@ -6,6 +6,7 @@ import { SettingsService } from 'services/settings-service';
 export class ScoreCustomElement {
     @bindable gameOver;
     @bindable level;
+    @bindable language;
 
     constructor(eventAggregator, settingsService) {
         this.score = 0;
@@ -50,6 +51,10 @@ export class ScoreCustomElement {
 
     gameOverChanged(oldValue, newValue) {
         this._resetScore = newValue;
+    }
+
+    languageChanged() {
+        this._resetScore = true;
     }
 
     _checkHighScore() {
