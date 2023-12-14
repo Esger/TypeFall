@@ -199,6 +199,7 @@ export class BoardCustomElement {
     }
 
     _resumeGame() {
+        clearInterval(this._blocksEmptyPollTimer);
         this._letterAdderIntervalId = setInterval(_ => {
             if (!this._nextLetter()) {
                 this._levelComplete();

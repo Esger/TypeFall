@@ -49,6 +49,7 @@ export class App {
         // listen to level change in settings
         this._setLevelSubscription = this._eventAggregator.subscribe('level', level => {
             this.level = level;
+            this.paused = true;
         });
         this._levelCompleteSubscription = this._eventAggregator.subscribe('levelComplete', _ => {
             if (this.level == this.maxLevel) {
