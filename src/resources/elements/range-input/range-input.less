@@ -38,7 +38,7 @@ input[type=range]::-moz-range-track {
     .trackDefinition;
 }
 
-input[type=range]::-webkit-slider-thumb {
+.thumbDefinition {
     // box-shadow        : 1px 1px 1px #000031;
     border            : 1px solid var(--mainColor);
     height            : 26px;
@@ -50,14 +50,12 @@ input[type=range]::-webkit-slider-thumb {
     margin-top        : -8px;
 }
 
+input[type=range]::-webkit-slider-thumb {
+    .thumbDefinition;
+}
+
 input[type=range]::-moz-range-thumb {
-    // box-shadow   : 1px 1px 1px #000031;
-    border       : 1px solid var(--mainColor);
-    height       : 26px;
-    width        : 26px;
-    border-radius: 15px;
-    background   : var(--accentColor);
-    cursor       : pointer;
+    .thumbDefinition;
 }
 
 // input[type=range]:focus::-webkit-slider-runnable-track {
