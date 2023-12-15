@@ -1,6 +1,6 @@
 export class SettingsService {
     _settingsName = 'typefall';
-    _version = 'v0.59'; // increase when settings object changes
+    _version = 'v0.62'; // increase when settings object changes
     _settings = {};
 
     constructor() {
