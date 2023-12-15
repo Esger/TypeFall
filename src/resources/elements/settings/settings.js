@@ -5,7 +5,7 @@ import { SettingsService } from 'services/settings-service';
 @inject(BindingEngine, EventAggregator, SettingsService)
 export class SettingsCustomElement {
     @bindable initial
-    @bindable selectedLanguage;
+    @bindable language;
     @bindable levelCompleted;
     @bindable level;
     @bindable maxLevel;
@@ -38,9 +38,11 @@ export class SettingsCustomElement {
         this._languageChangedSubscription.dispose();
     }
 
-    selectedLanguageChanged(newValue) {
-        this.selectedLanguage = newValue;
-        this._settingsService.saveSettings('lang', this.selectedLanguage.id);
+    languageChanged(newValue) {
+        if (newValue !== undefined) {
+            this.language = newValue;
+            this._settingsService.saveSettings('lang', this.language.id);
+        }
     }
 
     levelChanged(level) {

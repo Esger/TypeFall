@@ -49,12 +49,12 @@ export class ScoreCustomElement {
         this._scoreSubscription.dispose();
     }
 
-    gameOverChanged(oldValue, newValue) {
+    gameOverChanged(newValue) {
         this._resetScore = newValue;
     }
 
     languageChanged() {
-        this._resetScore = true;
+        this.score = 0;
     }
 
     _checkHighScore() {
