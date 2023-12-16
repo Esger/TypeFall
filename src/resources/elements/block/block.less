@@ -13,6 +13,8 @@
 }
 
 block {
+    --blockColor: var(--mainColor);
+
     @property --animationDuration {
         syntax       : "<time>";
         inherits     : false;
@@ -57,17 +59,17 @@ block {
     place-items     : center;
     width           : 100%;
     border-radius   : 4px;
-    border          : 2px solid green;
+    border          : 2px solid var(--blockColor);
     aspect-ratio    : 1;
     user-select     : none;
     background-color: black;
-    color           : green;
+    color           : var(--blockColor);
 }
 
 block.accentColor {
 
     .block:not(.au-leave-active),
-    &:has(.au-leave-active)+block.au-enter-active .block {
-        color: var(--accentColor);
+    &:has(.au-leave-active)+block.au-enter-active {
+        --blockColor: var(--accentColor);
     }
 }
