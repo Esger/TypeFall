@@ -25,7 +25,7 @@ export class BlockCustomElement {
         this.size = this._element.clientWidth;
         const boardWidth = this._element.parentElement.clientWidth;
         const columnCount = Math.floor(boardWidth / this.size);
-        this.block.column = Math.floor(Math.random() * columnCount);
+        this.block.column = Math.ceil(Math.random() * (columnCount - 1));
         this.piles[this.block.column]++;
 
         const margin = (boardWidth - (columnCount * this.size)) / 2;
