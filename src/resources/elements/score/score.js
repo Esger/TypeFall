@@ -6,6 +6,8 @@ import { SettingsService } from 'services/settings-service';
 export class ScoreCustomElement {
     @bindable gameOver;
     @bindable level;
+    @bindable levelCharCount;
+    @bindable blocksReleased = 0;
     @bindable language;
 
     constructor(eventAggregator, settingsService) {
