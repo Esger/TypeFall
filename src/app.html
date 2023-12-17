@@ -3,7 +3,6 @@
     <require from="./reset.css"></require>
     <require from="elements/board/board"></require>
     <require from="elements/settings/settings"></require>
-    <require from="elements/score/score"></require>
     <require from="elements/status/status"></require>
 
     <status paused.bind="paused"
@@ -22,11 +21,8 @@
                initial.bind="initial"
                level-completed.bind="levelCompleted"
                game-completed.bind="gameCompleted"
-               game-over.bind="gameOver"></board>
-        <score if.bind="!isMobile"
-               level.bind="level"
-               language.bind="language.name"
-               game-over.bind="gameOver"></score>
+               game-over.bind="gameOver">
+        </board>
         <settings if.bind="!isMobile"
                   level.bind="level"
                   language.bind="language"

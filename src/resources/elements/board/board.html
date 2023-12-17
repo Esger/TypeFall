@@ -1,6 +1,7 @@
 <template>
     <require from="./board.css"></require>
     <require from="elements/block/block"></require>
+    <require from="elements/score/score"></require>
 
     <div class="piles">
         <div repeat.for="i of maxPiles"
@@ -16,5 +17,12 @@
                    is-next-block.bind="$first"></block>
         </template>
     </div>
+
+    <score if.bind="!isMobile"
+           level.bind="level"
+           level-char-count.bind="levelCharCount"
+           blocks-released.bind="nextCharIndex"
+           language.bind="language.name"
+           game-over.bind="gameOver"></score>
 
 </template>

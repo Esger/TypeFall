@@ -5,4 +5,6 @@
         <high show.bind="highScore > 0">high: ${highScore}&ensp;|&ensp;level: ${level}</high>
         <span class="${negative ? 'flash--red' : ''}">${score}</span>
     </h2>
+    <div class="progressBar"
+         css.bind="{transform: 'scaleX(' + blocksReleased / levelCharCount + ')'}"></div>
 </template>

@@ -1,7 +1,7 @@
 import { bindable, inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(EventAggregator)
+@inject(Element, EventAggregator)
 export class BoardCustomElement {
     @bindable paused = true;
     @bindable level;
@@ -11,7 +11,8 @@ export class BoardCustomElement {
     @bindable gameCompleted;
     @bindable initial;
 
-    constructor(eventAggregator) {
+    constructor(element, eventAggregator) {
+        this._element = element;
         this._eventAggregator = eventAggregator;
         this._letters = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
         this._initialInterval = 1000; //1000;
@@ -28,7 +29,7 @@ export class BoardCustomElement {
         this._allowedCharSets = [
             'asdfjkl', ' eruio', 'ghtyvb', 'qwert', 'zxcvnm', '.,;/-', '?!:', '1234567890'
         ]
-        this._nextCharIndex = 0;
+        this.nextCharIndex = 0;
     }
 
     attached() {
@@ -64,7 +65,7 @@ export class BoardCustomElement {
     }
 
     levelChanged() {
-        this._nextCharIndex = 0;
+        this.nextCharIndex = 0;
     }
 
     gameOverChanged(gameOver) {
@@ -74,6 +75,7 @@ export class BoardCustomElement {
     _adjustGameSpeed(score) {
         this._typedCount += score;
         if (this._typedCount > 10) {
+            // increase speed but not less than 400ms between letters
             this._addInterval = Math.max(this._addInterval * .95, 400);
             this._typedCount = 0;
             this._pauseGame();
@@ -106,18 +108,18 @@ export class BoardCustomElement {
         allowedText = allowedTextArray.filter(char => inAllowedCharacters(char)).join('');
 
         // each subsequent level is 50 characters longer
-        this._levelCharCount = this.level * this._lettersPerLevel;
+        this.levelCharCount = this.level * this._lettersPerLevel;
 
         // duplicate random text till long enough and shuffle
         if (this._random) {
-            while (allowedText.length < this._levelCharCount) {
+            while (allowedText.length < this.levelCharCount) {
                 allowedText = allowedText + allowedText;
             }
             allowedText = this._shuffleArray(allowedText.split('')).join('');
         }
 
         // truncate to level length
-        allowedText = allowedText.substring(0, this._levelCharCount);
+        allowedText = allowedText.substring(0, this.levelCharCount);
         return allowedText;
     }
 
@@ -125,11 +127,11 @@ export class BoardCustomElement {
         if (this.paused || this.gameCompleted || !this._text || this.blocks?.length > this._maxBlocks) return false;
 
         let letter;
-        if (this._nextCharIndex > this._levelCharCount) {
+        if (this.nextCharIndex > this.levelCharCount) {
             return false;
         } else {
-            letter = this._text.charAt(this._nextCharIndex).toLocaleLowerCase();
-            this._nextCharIndex++;
+            letter = this._text.charAt(this.nextCharIndex).toLocaleLowerCase();
+            this.nextCharIndex++;
         }
 
         if (!letter) return false;
@@ -201,10 +203,13 @@ export class BoardCustomElement {
     _resumeGame() {
         clearInterval(this._blocksEmptyPollTimer);
         this._letterAdderIntervalId = setInterval(_ => {
+            const now = performance.now();
+            this._element.style.setProperty('--addInterval', now - this._lastTime + 'ms');
             if (!this._nextLetter()) {
                 this._levelComplete();
                 clearInterval(this._letterAdderIntervalId);
             }
+            this._lastTime = now;
         }, this._addInterval);
     }
 
