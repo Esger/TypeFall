@@ -25,12 +25,10 @@ export class BlockCustomElement {
         this.size = this._element.clientWidth;
         const boardWidth = this._element.parentElement.clientWidth;
         const columnCount = Math.floor(boardWidth / this.size);
-        this.block.column = Math.floor(Math.random() * columnCount);
+        this.block.column = Math.ceil(Math.random() * (columnCount - 1));
+        this._element.style.setProperty("--pileLeft", 'calc(' + this.block.column + ' * var(--blockWidth) - 0.5 * var(--blockWidth))');
+
         this.piles[this.block.column]++;
-
-        const margin = (boardWidth - (columnCount * this.size)) / 2;
-        this.left = this.block.column * this.size + margin;
-
         const blocksInTargetPileCount = this.piles[this.block.column] - 1;
         const totalBlocksHeight = blocksInTargetPileCount * 5;
         const newHeight = 100 - totalBlocksHeight + 'dvh';

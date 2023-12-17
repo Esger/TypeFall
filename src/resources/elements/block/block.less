@@ -19,14 +19,18 @@ block {
         initial-value: 5s;
     }
 
-    position   : absolute;
-    top        : calc(-1 * var(--blockWidth));
-    width      : var(--blockWidth);
-    height     : var(--pileTop);
-    // outline : 2px dotted yellow;
+    position         : absolute;
+    top              : calc(-1 * var(--blockWidth));
+    left             : var(--pileLeft);
+    width            : var(--blockWidth);
+    height           : var(--pileTop);
+    // outline       : 2px dotted yellow;
+    // outline-offset: 100px;
 
     .block {
-        position: absolute;
+        position         : absolute;
+        // outline       : 2px dotted antiquewhite;
+        // outline-offset: 50px;
     }
 
     &.animate-drift-down {
@@ -57,7 +61,8 @@ block {
     place-items     : center;
     width           : 100%;
     border-radius   : 4px;
-    border          : 2px solid var(--blockColor);
+    outline         : 2px solid var(--blockColor);
+    outline-offset  : -2px;
     aspect-ratio    : 1;
     user-select     : none;
     background-color: black;
