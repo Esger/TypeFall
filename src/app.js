@@ -14,6 +14,7 @@ export class App {
         this.gameOver = false;
         this.isMobile = false;
         this._startLevel = 1;
+        this._missed = 0;
         this.level = this._startLevel;
         this.maxLevel = 5;
         this.levelCompleted = false;
@@ -51,12 +52,18 @@ export class App {
             this.level = level;
             this.paused = true;
         });
+        this._scoreSubscription = this._eventAggregator.subscribe('score', score => {
+            this._missed += score < 0 ? -score : 0;
+        })
         this._levelCompleteSubscription = this._eventAggregator.subscribe('levelComplete', _ => {
             if (this.level == this.maxLevel) {
                 this.gameCompleted = true;
             } else {
                 this.levelCompleted = true;
-                this.level++;
+                const maxMissed = 10 * this.level;
+                if (this._missed < maxMissed)
+                    this.level++;
+                this._missed = 0;
             }
             this.paused = true;
         });
@@ -78,6 +85,7 @@ export class App {
         this._startStopSubscription.dispose();
         this._startSubscription.dispose();
         this._setLevelSubscription.dispose();
+        this._scoreSubscription.dispose();
         this._levelCompleteSubscription.dispose();
         this._gameOverSubscription.dispose();
         this._gameStartedSubscription.dispose();
