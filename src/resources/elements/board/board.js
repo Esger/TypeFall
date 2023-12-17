@@ -103,7 +103,7 @@ export class BoardCustomElement {
         const lastSlice = Math.min(this.level, this._allowedCharSets.length - 1);
         let allowedCharacters = this._allowedCharSets.slice(0, lastSlice).join('');
 
-        // filter out characters that are not meant for this level
+        // filter out characters for higher levels
         const inAllowedCharacters = char => allowedCharacters.includes(char.toLocaleLowerCase());
         allowedText = allowedTextArray.filter(char => inAllowedCharacters(char)).join('');
 
