@@ -1,0 +1,14 @@
+<template>
+    <require from="./radio-set.css"></require>
+    <require from="elements/input-label/input-label"></require>
+
+    <input-label repeat.for="option of options"
+                 label-text.bind="option.name"
+                 class="label--after">
+        <input type="radio"
+                name.bind="name"
+                value.bind="option.id"
+                model.bind="option"
+                checked.bind="selectedOption">
+        </label>
+</template>

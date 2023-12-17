@@ -1,0 +1,78 @@
+.animate-fall-out {
+
+    &.au-leave-active {
+        // outline  : 10px solid blue;
+        animation: fallOut .5s ease-in;
+    }
+
+    @keyframes fallOut {
+        to {
+            translate: 0 100vh 0;
+        }
+    }
+}
+
+block {
+    @property --animationDuration {
+        syntax       : "<time>";
+        inherits     : false;
+        initial-value: 5s;
+    }
+
+    position         : absolute;
+    top              : calc(-1 * var(--blockWidth));
+    left             : var(--pileLeft);
+    width            : var(--blockWidth);
+    height           : var(--pileTop);
+    // outline       : 2px dotted yellow;
+    // outline-offset: 100px;
+
+    .block {
+        position         : absolute;
+        // outline       : 2px dotted antiquewhite;
+        // outline-offset: 50px;
+    }
+
+    &.animate-drift-down {
+        --animationDuration: 5s;
+        --pileTop          : 100dvh;
+
+        &.au-enter-active {
+            // outline  : 2px solid blue;
+            animation: fallDown var(--animationDuration) ease-in forwards;
+        }
+
+        @keyframes fallDown {
+            to {
+                translate: 0 var(--pileTop) 0;
+            }
+        }
+    }
+}
+
+
+.block {
+    font-family     : 'Bungee Hairline', cursive;
+    font-size       : clamp(32px, calc(2rem + ((1vmin - 6px) * 2.6667)), 48px);
+    min-height      : 0vw;
+    font-weight     : 600;
+    line-height     : 0;
+    display         : grid;
+    place-items     : center;
+    width           : 100%;
+    border-radius   : 4px;
+    outline         : 2px solid var(--blockColor);
+    outline-offset  : -2px;
+    aspect-ratio    : 1;
+    user-select     : none;
+    background-color: black;
+    color           : var(--blockColor);
+}
+
+block.accentColor {
+
+    .block:not(.au-leave-active),
+    &:has(.au-leave-active)+block.au-enter-active {
+        --blockColor: var(--accentColor);
+    }
+}

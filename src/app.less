@@ -1,7 +1,34 @@
-h1 {
-	color: green;
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Inline&family=Bungee+Outline&family=Open+Sans:wght@400;600&display=swap');
 
-	span {
-		color: crimson;
-	}
+:root,
+*::before,
+*::after {
+    --mainColor        : green;
+    --background       : fade(green, 15%);
+    --accentColor      : lighten(green, 15%);
+    --slightAccentColor: #003000;
+    --blockColor       : var(--mainColor);
+}
+
+html {
+    height: 100dvh;
+}
+
+body {
+    height          : 100dvh;
+    position        : relative;
+    background-color: black;
+    overflow        : hidden;
+    font-family     : 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.blocks,
+.piles,
+.title,
+.message {
+    position       : absolute;
+    inset          : 0;
+    display        : flex;
+    justify-content: center;
+    align-items    : flex-start;
 }

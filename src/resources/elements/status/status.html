@@ -1,0 +1,24 @@
+<template>
+    <require from="./status.css"></require>
+
+    <div class="title ${initial ? '' : 'title--dimmed'}">
+        <h1 if.bind="(paused && initial || !paused) && !gameOver && !isMobile && !showLevel"
+            class="au-animate animate-in animate-out">${title}</h1>
+    </div>
+
+    <slot></slot>
+
+    <div class="message">
+        <h2 if.bind="paused && levelCompleted && !initial && !gameOver && !gameCompleted"
+            class="au-animate animate-in animate-out">level ${level}</h2>
+        <h2 if.bind="paused && !initial && !gameOver && !gameCompleted && !levelCompleted"
+            class="au-animate animate-in animate-out">paused</h2>
+        <h2 if.bind="gameOver"
+            class="gameOver au-animate animate-in animate-out">game over</h2>
+        <h2 if.bind="gameCompleted"
+            class="au-animate animate-in animate-out">well done</h2>
+        <h2 if.bind="isMobile"
+            class="gameOver au-animate animate-in animate-out">no keyboard</h2>
+    </div>
+
+</template>

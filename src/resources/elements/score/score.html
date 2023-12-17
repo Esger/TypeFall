@@ -1,0 +1,8 @@
+<template>
+    <require from="./score.css"></require>
+
+    <h2>
+        <high show.bind="highScore > 0">high: ${highScore}&ensp;|&ensp;level: ${level}</high>
+        <span class="${negative ? 'flash--red' : ''}">${score}</span>
+    </h2>
+</template>

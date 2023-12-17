@@ -1,0 +1,16 @@
+<template>
+    <require from="elements/input-label/input-label"></require>
+    <require from="./range-input.css"></require>
+
+    <input-label for.bind="label"
+                 label-text.bind="label + ' ' + value"
+                 class="label--above">
+        <input type="range"
+                name.bind="label"
+                value.bind="value"
+                min.bind="min"
+                max.bind="max"
+                step="1"
+                input.trigger="newValue()">
+    </input-label>
+</template>

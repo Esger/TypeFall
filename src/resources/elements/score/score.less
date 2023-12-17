@@ -1,0 +1,30 @@
+score {
+    position   : absolute;
+    bottom     : 0;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
+    color      : green;
+
+    h2 {
+        margin     : 1rem 2rem 1rem auto;
+        display    : flex;
+        align-items: center;
+        gap        : 2rem;
+
+        span {
+            font-family: 'Bungee Outline', cursive;
+            font-size  : 3rem;
+            transition : color 0.2s ease;
+
+            &.flash--red {
+                color: tomato;
+            }
+        }
+
+        high {
+            font-family: 'Bungee Hairline', cursive;
+            font-size  : 2rem;
+        }
+    }
+}

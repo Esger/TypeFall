@@ -1,0 +1,63 @@
+range-input {
+    display       : flex;
+    flex-direction: column;
+}
+
+input[type=range] {
+    -webkit-appearance   : none;
+    width                : 100%;
+    height               : 34px;
+    // margin            : 10px 0;
+    background-color     : transparent;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+.trackDefinition {
+    width                : 100%;
+    height               : 11px;
+    cursor               : pointer;
+    animation-duration   : 0.2s;
+    // box-shadow        : 1px 1px 1px #000000;
+    border-radius        : 1in;
+    border               : 1px solid var(--mainColor);
+
+    &:hover {
+        background: var(--transparent);
+        box-shadow: 0 0 0 10px #000;
+    }
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    .trackDefinition;
+}
+
+input[type=range]::-moz-range-track {
+    .trackDefinition;
+}
+
+.thumbDefinition {
+    // box-shadow        : 1px 1px 1px #000031;
+    border            : 1px solid var(--mainColor);
+    height            : 26px;
+    width             : 26px;
+    border-radius     : 1in;
+    background        : var(--accentColor);
+    cursor            : pointer;
+    -webkit-appearance: none;
+    margin-top        : -8px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    .thumbDefinition;
+}
+
+input[type=range]::-moz-range-thumb {
+    .thumbDefinition;
+}
+
+// input[type=range]:focus::-webkit-slider-runnable-track {
+//     background: var(--slightAccentColor);
+// }

@@ -1,0 +1,26 @@
+board {
+    --blockWidth : 5vmin;
+    --boardHeight: 100dvh;
+    --pileHeight : var(--boardHeight);
+    display      : block;
+    position     : relative;
+    height       : var(--boardHeight);
+    max-width    : 100vmin;
+    margin       : 0 auto;
+    opacity      : 1;
+    transition   : opacity 200ms ease;
+
+    &.board--dimmed {
+        opacity: .3;
+    }
+}
+
+.pile {
+    flex-basis        : var(--blockWidth);
+    height            : var(--pileHeight);
+    display           : flex;
+    flex-direction    : column-reverse;
+    justify-content   : flex-start;
+    align-items       : center;
+    // outline        : 2px solid crimson;
+}
